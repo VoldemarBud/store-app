@@ -1,0 +1,20 @@
+<mat-toolbar class="border-b-1 bg-purple justify-space-between flex-wrap no-select">
+  <button routerLink="/" mat-icon-button class="cursor-pointer logo d-flex items-center ">
+    <mat-icon>home</mat-icon>
+    <span>My Shop</span>
+  </button>
+
+
+  <div>
+    <button routerLink="/products" mat-icon-button>
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+    <button
+      routerLink="/basket" mat-icon-button>
+      <mat-icon
+                [matBadge]="(badge|async)?.productsId.length!=0?(badge|async)?.productsId.length:null"
+                matBadgeColor="warn">shopping_basket
+      </mat-icon>
+    </button>
+  </div>
+</mat-toolbar>

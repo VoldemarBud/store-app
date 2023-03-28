@@ -1,0 +1,9 @@
+#dependencies
+/node_modules
+/.angular
+#production
+/build
+#misc
+npm-dubug.log*
+yarn-debug.log*
+yarn-erro.log*

@@ -1,0 +1,46 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content class="d-flex direction-column max-height-auto">
+    <p>{{data.title}}</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Product title</mat-label>
+      <input formControlName="title" type="text" matInput>
+    </mat-form-field>
+    <div class="form-load-file">
+      <button [ngClass]="{'warning':(formImage.invalid && formImage.touched)}"
+        mat-raised-button type="button" (click)="f_input.click()">
+        <mat-icon>attach_file</mat-icon>
+        Product image*
+      </button>
+      <p class="form-product-name">{{formImage.value.imgName}}</p>
+      <input
+        type="file"
+        hidden
+        #f_input
+        accept=".png, .jpg, .jpeg"
+        (change)="handleFileInputChange(f_input.files)"
+      />
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Product price</mat-label>
+      <input formControlName="price" type="number" matNativeControl>
+    </mat-form-field>
+    <div formGroupName="configure">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Product year</mat-label>
+        <input formControlName="year" type="text" matInput>
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea rows="5" formControlName="description" matInput></textarea>
+    </mat-form-field>
+
+    <span class="small-desc">
+      * - required to fill
+    </span>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button type="button" (click)="onNoClick()">Close</button>
+    <button mat-button type="submit">Ok</button>
+  </div>
+</form>

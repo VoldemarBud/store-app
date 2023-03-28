@@ -1,0 +1,19 @@
+<div class="container flex-direction-column">
+  <h3>Your basket!</h3>
+  <div>
+    <p>Products:</p>
+    <ol>
+      <li class="basket-product" *ngFor="let product of badgeProducts$|async;let idx = index">{{idx + 1}} -
+        {{product.title}} -
+        {{product.price|currency}}
+        <button (click)="deleteFromBasket(product.id)"
+          mat-icon-button>
+          <mat-icon>
+            close
+          </mat-icon>
+        </button>
+      </li>
+    </ol>
+    <p>Total: {{totalPrice$|async|currency}}</p>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="container gap-10">
+  <div class="product-img">
+    <img width="100px" height="100px" [src]=(product|async)?.image?.imgUrl [alt]=(product|async)?.image?.imgName>
+  </div>
+  <div class="flex-1 product-description">
+    <h3>{{(product|async)?.title}}</h3>
+    <p>Year: {{(product|async)?.configure?.year}}</p>
+    <p>{{(product|async)?.price|currency}}</p>
+    <p>{{(product|async)?.description}}</p>
+    <button class="bg-purple" mat-button>Add to basket</button>
+  </div>
+</div>
