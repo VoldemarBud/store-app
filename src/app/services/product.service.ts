@@ -25,7 +25,7 @@ export class ProductService {
     return this.cloudStore.collection(this.productsPath)
   }
 
-  deleteLastFile(imageFile: File | IProduct | undefined, fileName: any): void {
+  deleteLastFile(imageFile: File | IProduct | undefined, fileName: string): void {
     if (imageFile) {
       this.storage.ref(this.productsPath).child(fileName).delete();
     }
@@ -65,11 +65,12 @@ export class ProductService {
   get basketProducts() {
     return this.getTotalProductInBasket.pipe(
       filter(data => !!data),
-      switchMap((basketItems: any) => {
-        const productsId = basketItems.productsId
+      switchMap((basketItems:any) => {
+        // {productsId:[]}
+        console.log(basketItems);
         return this.getProducts
           .valueChanges({idField: 'id'})
-          .pipe(map((products) => products.filter((product) => productsId.includes(product.id))));
+          .pipe(map((products) => products.filter((product) => basketItems.productsId.includes(product.id))));
       })
     ) as Observable<IProduct[]>
   }
