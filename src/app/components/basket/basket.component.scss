@@ -1,16 +1,27 @@
-.basket-product {
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-  button {
-    margin-left: 10px;
-    height: 24px;
-    width: 24px;
-    padding: 0;
+.basket {
+  padding: 0 15px;
+  .basket-product {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
 
-    ::ng-deep  .mat-mdc-button-touch-target{
+    button {
+      margin-left: 10px;
       height: 24px;
       width: 24px;
+      padding: 0;
+
+      ::ng-deep .mat-mdc-button-touch-target {
+        height: 24px;
+        width: 24px;
+      }
+    }
+  }
+  .total-price{
+    margin-top: 25px;
+    span{
+      padding-left: 15px;
+      text-decoration: underline;
     }
   }
 }
