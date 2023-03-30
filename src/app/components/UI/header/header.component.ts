@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.badge = this.productService.getTotalProductInBasket.pipe(filter(data => !!data));
+    this.badge = this.productService.getTotalProductInBasket.pipe(filter(data => !!data));
   }
 
 }
