@@ -2,8 +2,18 @@
   img {
     height: auto;
     min-width: 350px;
+    border: 1px solid #cfcfcf;
+    border-radius: 5px;
+    width: 100%;
+    transition: 1s ease-in-out;
+    &:hover{
+      transform: scale(1.2) translate(70px,20px);
+    }
   }
 }
 .product-description{
   min-width: 350px;
+  button{
+    z-index: -1;
+  }
 }

@@ -12,6 +12,7 @@
   .products-card-img {
     margin-top: 10px;
     overflow-x: hidden;
+    border: 1px solid #cfcfcf;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -39,8 +40,15 @@
   .products-card-actions {
     gap: 10px;
 
-    button.btn-edite{
+    button.btn-edite {
       color: #000;
+      border: 1px solid #fff0;
+      &:hover {
+        border-color: #cfcfcf;
+      }
+      span{
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+      }
     }
   }
 

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {filter, map, Observable, reduce, Subject, switchMap, takeUntil} from 'rxjs';
+import {map, Observable, Subject, takeUntil} from 'rxjs';
 import {ProductService} from '../../services/product.service';
 import {IProduct} from '../../models/product';
 

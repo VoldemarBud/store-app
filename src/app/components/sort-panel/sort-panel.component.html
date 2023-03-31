@@ -1,0 +1,19 @@
+<div class="w-100 bg-purple d-flex gap-10 items-center justify-center sort-panel">
+    <p>Sort by: </p>
+    <form [formGroup]="sortByForm" class="d-flex items-center gap-10" >
+            <select formControlName="fieldPath"  class="text-center" (change)="onSort()"  >
+                <option value="title">
+                    title</option>
+                <option value="configure.year">
+                    date</option>
+                <option value="price">
+                    price</option>
+            </select>
+            <select formControlName="directionStr" class="text-center" (change)="onSort()" >
+                <option value="asc">
+                    asc</option>
+                <option value="desc">
+                    desc</option>
+            </select>
+    </form>
+</div>
