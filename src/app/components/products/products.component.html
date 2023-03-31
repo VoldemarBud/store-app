@@ -4,7 +4,7 @@
         Add Product
     </button>
 </mat-toolbar>
-
+<app-sort-panel (sortBy)="getSorted($event)"></app-sort-panel>
 <h3 class="text-center page-title">Products</h3>
 <div class="container gap-10  items-flex-start">
     <mat-card class="products-card" *ngFor="let product of products |async">

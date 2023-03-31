@@ -4,6 +4,7 @@ import {Observable, Subject, takeUntil} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogBoxComponent} from '../dialog-box/dialog-box.component';
 import {ProductService} from '../../services/product.service';
+import {QueryFn} from "../../models/queryFn";
 
 @Component({
   selector: 'app-products',
@@ -19,7 +20,11 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.products = this.productService.getProducts.valueChanges({idField: 'id'}) as Observable<IProduct[]>;
+    this.products = this.productService.getProducts({}).valueChanges({idField: 'id'}) as Observable<IProduct[]>;
+  }
+
+  getSorted(data: QueryFn){
+    this.products = this.productService.getProducts(data).valueChanges({idField: 'id'}) as Observable<IProduct[]>;
   }
 
   addToBasket(id: string): void {

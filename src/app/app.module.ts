@@ -26,6 +26,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {TruncatePipe} from './pipes/truncate.pipe';
 import {MatBadgeModule} from '@angular/material/badge';
+import { SortPanelComponent } from './components/sort-panel/sort-panel.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {MatBadgeModule} from '@angular/material/badge';
     BaseComponent,
     DialogBoxComponent,
     TruncatePipe,
+    SortPanelComponent,
   ],
   imports: [
     BrowserModule,
