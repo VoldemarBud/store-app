@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {AngularFireStorage} from '@angular/fire/compat/storage';
 import {filter, first, map, Observable, of, switchMap} from 'rxjs';
-import {IProduct} from '../models/product';
+import {IProduct} from '../models/product/product';
 import {QueryFn} from "../models/queryFn";
 
 @Injectable({

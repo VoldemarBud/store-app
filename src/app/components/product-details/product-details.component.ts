@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Data} from '@angular/router';
 import {map, Observable} from 'rxjs';
-import {IProduct} from '../../models/product';
+import {IProduct} from '../../models/product/product';
 
 @Component({
   selector: 'app-product-details',

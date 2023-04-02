@@ -4,7 +4,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {ProductService} from '../../services/product.service';
 import {filter, Subject, switchMap, takeUntil} from 'rxjs';
-import {IProduct} from '../../models/product';
+import { IProduct } from 'src/app/models/product/product';
 
 interface DialogData {
     title: string,

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {IProduct} from '../../models/product';
+import {IProduct} from '../../models/product/product';
 import {Observable, Subject, takeUntil} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogBoxComponent} from '../dialog-box/dialog-box.component';

@@ -27,6 +27,8 @@ import {MatInputModule} from '@angular/material/input';
 import {TruncatePipe} from './pipes/truncate.pipe';
 import {MatBadgeModule} from '@angular/material/badge';
 import { SortPanelComponent } from './components/sort-panel/sort-panel.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { SortPanelComponent } from './components/sort-panel/sort-panel.component
     DialogBoxComponent,
     TruncatePipe,
     SortPanelComponent,
+    SignInComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,7 +63,7 @@ import { SortPanelComponent } from './components/sort-panel/sort-panel.component
     MatInputModule,
     MatBadgeModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

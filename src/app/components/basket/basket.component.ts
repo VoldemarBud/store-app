@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {map, Observable, Subject, takeUntil} from 'rxjs';
 import {ProductService} from '../../services/product.service';
-import {IProduct} from '../../models/product';
+import {IProduct} from '../../models/product/product';
 
 @Component({
   selector: 'app-basket',

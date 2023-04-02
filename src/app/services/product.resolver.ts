@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
-import {IProduct} from '../models/product';
+import {IProduct} from '../models/product/product';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 
 @Injectable({
