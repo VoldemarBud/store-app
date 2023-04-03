@@ -6,9 +6,9 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HeaderComponent} from './components/UI/header/header.component';
 import {FooterComponent} from './components/UI/footer/footer.component';
-import {ProductsComponent} from './components/products/products.component';
+import {ProductsComponent} from './components/product/products/products.component';
 import {BasketComponent} from './components/basket/basket.component';
-import {ProductDetailsComponent} from './components/product-details/product-details.component';
+import {ProductDetailsComponent} from './components/product/product-details/product-details.component';
 import {BaseComponent} from './components/base/base.component';
 import {DialogBoxComponent} from './components/dialog-box/dialog-box.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -26,9 +26,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {TruncatePipe} from './pipes/truncate.pipe';
 import {MatBadgeModule} from '@angular/material/badge';
-import { SortPanelComponent } from './components/sort-panel/sort-panel.component';
+import { SortPanelComponent } from './components/product/sort-panel/sort-panel.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
-import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -63,7 +62,7 @@ import { AuthService } from './services/auth.service';
     MatInputModule,
     MatBadgeModule,
   ],
-  providers: [AuthService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,0 +1,11 @@
+.sing-in-btn{
+  background-color: purple;
+}
+.redirect{
+  cursor:pointer;
+  text-decoration: underline;
+  color: #5ab697;
+  &:hover{
+    color: fuchsia;
+  }
+}

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {AngularFireStorage} from '@angular/fire/compat/storage';
-import {filter, first, map, Observable, of, switchMap} from 'rxjs';
+import {filter, first, map, Observable, of, shareReplay, switchMap} from 'rxjs';
 import {IProduct} from '../models/product/product';
 import {QueryFn} from "../models/queryFn";
 
@@ -11,6 +11,9 @@ import {QueryFn} from "../models/queryFn";
 export class ProductService {
     private readonly productsPath: string = 'products';
     private readonly basketPath: string = 'basket';
+
+    getTotalProductInBasket$ : Observable<any> = this.getTotalProductInBasket()
+    basketProducts$ : Observable<any> = this.basketProducts()
 
     constructor(
         private cloudStore: AngularFirestore,
@@ -60,12 +63,12 @@ export class ProductService {
             )
     }
 
-    get getTotalProductInBasket() {
-        return this.cloudStore.collection(this.basketPath).doc('activeOrder').valueChanges()
+     getTotalProductInBasket() {
+        return this.cloudStore.collection(this.basketPath).doc('activeOrder').valueChanges().pipe(shareReplay(1))
     }
 
-    get basketProducts() {
-        return this.getTotalProductInBasket.pipe(
+     basketProducts() {
+        return this.getTotalProductInBasket$.pipe(
             filter(data => !!data),
             switchMap((basketItems: any) => {
                 return this.getProducts({})

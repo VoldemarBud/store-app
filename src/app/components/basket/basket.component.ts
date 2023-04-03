@@ -17,18 +17,15 @@ export class BasketComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.badgeProducts$ = this.basketProducts;
-    this.totalPrice$ = this.totalPrice;
+    this.badgeProducts$ = this.productService.basketProducts$
+    this.totalPrice$ = this.totalPrice()
   }
+  
 
-  get basketProducts(): Observable<IProduct[]> {
-    return this.productService.basketProducts
-  }
-
-  get totalPrice() {
-    return this.basketProducts.pipe(
-      map(data => data.map(data => data.price)
-        .reduce((sum, price) => sum + price, 0)),
+   totalPrice() {
+    return this.productService.basketProducts$.pipe(
+      map(data => data.map((data:IProduct) => data.price)
+        .reduce((sum:number, price:number) => sum + price, 0)),
     )
   }
 

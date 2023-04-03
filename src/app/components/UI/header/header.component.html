@@ -8,14 +8,19 @@
       <mat-icon>store</mat-icon>
     </button>
     <button
-      routerLink="/basket" mat-icon-button>
+      routerLink="/basket" *ngIf="canView$|async" mat-icon-button>
       <mat-icon
                 [matBadge]="(badge|async)?.productsId.length!=0?(badge|async)?.productsId.length:null"
                 matBadgeColor="warn">shopping_basket
       </mat-icon>
     </button>
-    <button routerLink="/sign-in" mat-icon-button>
+    <button routerLink="/sign-in" *ngIf="!(canView$|async);else logout" mat-icon-button>
       <mat-icon>key</mat-icon>
     </button>
+    <ng-template #logout>
+      <button (click)="onLogout()" mat-icon-button>
+        <mat-icon>meeting_room</mat-icon>
+      </button>
+    </ng-template>
   </div>
 </mat-toolbar>
