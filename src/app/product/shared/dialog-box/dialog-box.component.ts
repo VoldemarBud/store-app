@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
-import {ProductService} from '../../services/product.service';
+import {ProductService} from '../../../services/product.service';
 import {filter, Subject, switchMap, takeUntil} from 'rxjs';
 import { IProduct } from 'src/app/models/product/product';
 
@@ -77,7 +77,7 @@ export class DialogBoxComponent implements OnInit {
 
     private generateNewName(imageFileName: string): string {
         const lastPoint = imageFileName!.indexOf('.');
-        return `${imageFileName.substring(0, lastPoint)}-${new Date().getTime()}${imageFileName!.substring(lastPoint)}`
+        return `${imageFileName.substring(0, lastPoint)}-${new Date().getTime()}${imageFileName.substring(lastPoint)}`
     }
 
     handleFileInputChange(l: FileList | null): void {

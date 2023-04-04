@@ -7,6 +7,7 @@
     <p>Year: {{(product|async)?.configure?.year}}</p>
     <p>{{(product|async)?.price|currency}}</p>
     <p>Description: {{(product|async)?.description}}</p>
-    <button class="bg-purple" mat-button>Add to basket</button>
+    <button class="bg-purple" *ngIf="(canView$|async)" mat-button>Add to basket</button>
+
   </div>
 </div>

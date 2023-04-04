@@ -19,21 +19,27 @@ export class AuthService {
 
     isLoggedIn() {
         return this._isLoggedIn;
-        console.log(this._isLoggedIn);
     }
 
     login({email, password}: LoginWithEmail) {
-        this.fireauth.signInWithEmailAndPassword(email, password)
-            .then((data) => {
-                console.log(data);
+        return this.fireauth.signInWithEmailAndPassword(email, password)
+            .then(() => {
                 this._isLoggedIn.next(true);
                 this.router.navigate(['home'])
             })
-            .catch(err => {
-                console.log(err.message);
+            .catch(({message}) => {
+               return `${message.substring(message.indexOf(':')+2, message.lastIndexOf('(') - 1)} `
             })
     }
-
+    registration({email, password}: LoginWithEmail){
+      return  this.fireauth.createUserWithEmailAndPassword(email, password)
+          .then(() => {
+              this._isLoggedIn.next(true);
+              this.router.navigate(['home'])
+          }).catch(({message}) => {
+            return `${message.substring(message.indexOf(':')+2, message.lastIndexOf('(') - 1)} `
+        })
+    }
 
     logout() {
         this.fireauth.signOut().then(() => {

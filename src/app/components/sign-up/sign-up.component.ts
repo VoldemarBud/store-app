@@ -3,13 +3,13 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 
 @Component({
-    selector: 'app-sign-in',
-    templateUrl: './sign-in.component.html',
-    styleUrls: ['./sign-in.component.scss']
+    selector: 'app-sign-up',
+    templateUrl: './sign-up.component.html',
+    styleUrls: ['./sign-up.component.scss']
 })
-export class SignInComponent  {
+export class SignUpComponent {
     showPass: boolean = false;
-    singInFrom: FormGroup = new FormGroup<any>({
+    singUpFrom: FormGroup = new FormGroup<any>({
         email: new FormControl('', [
             Validators.required,
             Validators.email
@@ -27,9 +27,9 @@ export class SignInComponent  {
         this.showPass = !this.showPass;
     }
 
-    onLogin(): void {
-        if (this.singInFrom.valid) {
-            this.authMessage = this.authService.login(this.singInFrom.value)
+    onRegistration(): void {
+        if (this.singUpFrom.valid) {
+            this.authMessage =   this.authService.registration(this.singUpFrom.value)
         }
     }
 }

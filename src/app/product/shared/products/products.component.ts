@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {IProduct} from '../../../models/product/product';
 import {map, Observable, Subject, takeUntil} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
-import {DialogBoxComponent} from '../../dialog-box/dialog-box.component';
+import {DialogBoxComponent} from '../dialog-box/dialog-box.component';
 import {ProductService} from '../../../services/product.service';
 import {QueryFn} from "../../../models/queryFn";
 import {ActivatedRoute, Data} from "@angular/router";
