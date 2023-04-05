@@ -4,6 +4,10 @@ import {AngularFireStorage} from '@angular/fire/compat/storage';
 import {filter, first, map, Observable, of, shareReplay, switchMap} from 'rxjs';
 import {IProduct} from '../models/product/product';
 import {QueryFn} from "../models/queryFn";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {
+    AddToBasketSnackbarComponent
+} from "../components/snackbars/add-to-basket-snackbar/add-to-basket-snackbar.component";
 
 @Injectable({
     providedIn: 'root'
@@ -18,6 +22,7 @@ export class ProductService {
     constructor(
         private cloudStore: AngularFirestore,
         private storage: AngularFireStorage,
+        private _snackBar: MatSnackBar
     ) {
     }
 
@@ -47,17 +52,18 @@ export class ProductService {
 
     addToBasket(productId: string) {
         const activeOrder = this.cloudStore.collection(this.basketPath).doc('activeOrder')
-
         return activeOrder
             .valueChanges().pipe(
                 filter((data) => !!data),
                 first(),
                 switchMap((oldData: any) => {
                     if (!oldData.productsId.includes(productId)) {
+                        this.showMessage('Added to basket');
                         return activeOrder.update({
                             productsId: [...oldData.productsId, productId]
                         })
                     }
+                    this.showMessage('You have product in basket');
                     return of(oldData);
                 })
             )
@@ -85,16 +91,18 @@ export class ProductService {
     addProduct(data:IProduct){
         this.cloudStore.collection('products')
             .add(data)
+        this.showMessage('Product added');
     }
 
     editeProduct(productId:string,data:IProduct){
         this.cloudStore.collection('products')
-            .doc(productId).update(data)
+            .doc(productId).update(data);
+        this.showMessage('Product edited')
     }
 
     deleteFromBasket(productId: string) {
         const activeOrder = this.cloudStore.collection(this.basketPath).doc('activeOrder')
-
+        this.showMessage('Product delete from basket')
         return activeOrder
             .valueChanges().pipe(
                 filter((data) => !!data),
@@ -105,5 +113,17 @@ export class ProductService {
                     })
                 })
             )
+    }
+
+    private showMessage(message:string) {
+        this._snackBar.openFromComponent(
+            AddToBasketSnackbarComponent,
+            {
+                data: message,
+                duration: 3000,
+                verticalPosition: 'bottom',
+                horizontalPosition: "left"
+            }
+        )
     }
 }

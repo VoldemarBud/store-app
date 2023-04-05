@@ -5,7 +5,7 @@ import {BehaviorSubject, take} from "rxjs";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {IUser} from "../models/user";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {ErrorSnackbarComponent} from "../components/error-snackbar/error-snackbar.component";
+import {ErrorSnackbarComponent} from "../components/snackbars/error-snackbar/error-snackbar.component";
 
 @Injectable({
     providedIn: 'root'

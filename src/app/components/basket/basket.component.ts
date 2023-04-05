@@ -33,7 +33,6 @@ export class BasketComponent implements OnInit {
     this.productService.deleteFromBasket(id)
       .pipe(takeUntil(this.unSub))
       .subscribe(() => {
-
       this.unSub.next(true);
       this.unSub.complete();
     });

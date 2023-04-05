@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MAT_SNACK_BAR_DATA, MatSnackBarRef} from "@angular/material/snack-bar";
 
 @Component({
@@ -6,10 +6,9 @@ import {MAT_SNACK_BAR_DATA, MatSnackBarRef} from "@angular/material/snack-bar";
   templateUrl: './error-snackbar.component.html',
   styleUrls: ['./error-snackbar.component.scss']
 })
-export class ErrorSnackbarComponent implements OnInit {
+export class ErrorSnackbarComponent   {
   constructor(
       public sbRef: MatSnackBarRef<ErrorSnackbarComponent>,
       @Inject(MAT_SNACK_BAR_DATA) public data: string
   ) {}
-  ngOnInit() {}
 }

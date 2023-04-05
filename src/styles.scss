@@ -2,3 +2,7 @@
 
 html, body { height: 100%; }
 body { margin: 0;   font-family: 'Alkatra', cursive; }
+ .mat-mdc-snack-bar-container .mdc-snackbar__surface{
+  min-width: auto !important;
+  background-color: #ffffff !important
+}
