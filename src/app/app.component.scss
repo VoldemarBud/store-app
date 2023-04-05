@@ -104,6 +104,9 @@ main {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+.mb-10{
+  margin-bottom: 10px;
+}
 .mb-0{
   margin-bottom: 0;
 }
@@ -114,4 +117,8 @@ main {
 
 .max-height-auto {
   max-height: initial !important;
+}
+::ng-deep .custom-style{
+  background-color:brown;
+  color:white;
 }

@@ -1,0 +1,23 @@
+.auth-block {
+  max-width: 570px;
+  width: 100%;
+
+  form {
+    width: 300px;
+    margin: 0 auto;
+  }
+
+  .sing-in-btn {
+    background-color: purple;
+  }
+}
+
+.auth-link {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #5ab697;
+
+  &:hover {
+    color: fuchsia;
+  }
+}

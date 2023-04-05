@@ -1,5 +1,5 @@
 <div style="height: 84vh;" class="d-flex items-center flex-direction-column justify-center">
-    <div class="auth-block">
+    <div class="auth-block mb-10">
         <h3 class="text-center page-title">Sing In</h3>
         <form class="my-10 d-flex flex-direction-column" [formGroup]="singUpFrom" (ngSubmit)="onRegistration()">
             <mat-form-field appearance="fill">
@@ -14,11 +14,11 @@
                     {{showPass ? "visibility_off" : "visibility"}}
                 </mat-icon>
             </mat-form-field>
-            <div class="auth-message" *ngIf="authMessage">
-                <p class="warning">{{authMessage|async}}</p>
-            </div>
             <button class="sing-in-btn" type="submit" mat-button>Registration</button>
         </form>
+    </div>
+    <div>
+        <span class="auth-link" routerLink="/forgot-password"> Forgot password?</span>
     </div>
 
 </div>

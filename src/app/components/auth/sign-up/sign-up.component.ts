@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../services/auth.service";
+import {AuthService} from "../../../services/auth.service";
+import {filter, Subject} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-sign-up',
@@ -8,6 +10,7 @@ import {AuthService} from "../../services/auth.service";
     styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent {
+    private unsub = new Subject();
     showPass: boolean = false;
     singUpFrom: FormGroup = new FormGroup<any>({
         email: new FormControl('', [
@@ -16,10 +19,9 @@ export class SignUpComponent {
         ]),
         password: new FormControl('', Validators.required)
     })
-    authMessage!: Promise<string|void>;
-
     constructor(
-        public authService: AuthService
+        public authService: AuthService,
+        private router: Router
     ) {
     }
 
@@ -29,7 +31,12 @@ export class SignUpComponent {
 
     onRegistration(): void {
         if (this.singUpFrom.valid) {
-            this.authMessage =   this.authService.registration(this.singUpFrom.value)
+              this.authService.registration(this.singUpFrom.value)
+            this.authService.isLoggedIn().pipe(filter(data=>data)).subscribe(()=>{
+                this.router.navigate(['home'])
+                this.unsub.next(true);
+                this.unsub.complete();
+            })
         }
     }
 }

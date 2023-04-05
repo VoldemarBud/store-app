@@ -1,13 +1,16 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../services/auth.service";
+import {AuthService} from "../../../services/auth.service";
+import {filter, Subject} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-sign-in',
     templateUrl: './sign-in.component.html',
     styleUrls: ['./sign-in.component.scss']
 })
-export class SignInComponent  {
+export class SignInComponent {
+    private unsub = new Subject();
     showPass: boolean = false;
     singInFrom: FormGroup = new FormGroup<any>({
         email: new FormControl('', [
@@ -16,10 +19,10 @@ export class SignInComponent  {
         ]),
         password: new FormControl('', Validators.required)
     })
-    authMessage!: Promise<string|void>;
 
     constructor(
-        public authService: AuthService
+        public authService: AuthService,
+        private router: Router
     ) {
     }
 
@@ -29,7 +32,12 @@ export class SignInComponent  {
 
     onLogin(): void {
         if (this.singInFrom.valid) {
-            this.authMessage = this.authService.login(this.singInFrom.value)
+            this.authService.login(this.singInFrom.value)
+           this.authService.isLoggedIn().pipe(filter(data=>data)).subscribe(()=>{
+               this.router.navigate(['home'])
+               this.unsub.next(true);
+               this.unsub.complete();
+           })
         }
     }
 }

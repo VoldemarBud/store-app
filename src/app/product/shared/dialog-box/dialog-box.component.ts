@@ -1,10 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {ProductService} from '../../../services/product.service';
 import {filter, Subject, switchMap, takeUntil} from 'rxjs';
-import { IProduct } from 'src/app/models/product/product';
+import {IProduct} from 'src/app/models/product/product';
 
 interface DialogData {
     title: string,
@@ -22,7 +21,7 @@ export class DialogBoxComponent implements OnInit {
     private newFileName!: string;
     private unsub = new Subject();
 
-    form:FormGroup = new FormGroup({
+    form: FormGroup = new FormGroup({
         title: new FormControl('',
             [
                 Validators.required,
@@ -54,7 +53,6 @@ export class DialogBoxComponent implements OnInit {
 
     constructor(
         private productService: ProductService,
-        private cloudStore: AngularFirestore,
         public dialogRef: MatDialogRef<DialogBoxComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     }
@@ -108,15 +106,14 @@ export class DialogBoxComponent implements OnInit {
         }
     }
 
+
     onSubmit() {
         this.formImage.markAsTouched();
         if (this.form.valid) {
             if (this.data.product) {
-                this.cloudStore.collection('products')
-                    .doc(this.data.product.id).update(this.form.value)
+                this.productService.editeProduct(this.data.product.id,this.form.value);
             } else {
-                this.cloudStore.collection('products')
-                    .add(this.form.value)
+                this.productService.addProduct(this.form.value)
             }
             this.dialogRef.close();
         }

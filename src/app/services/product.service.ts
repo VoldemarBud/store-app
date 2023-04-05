@@ -82,6 +82,15 @@ export class ProductService {
         ) as Observable<IProduct[]>
     }
 
+    addProduct(data:IProduct){
+        this.cloudStore.collection('products')
+            .add(data)
+    }
+
+    editeProduct(productId:string,data:IProduct){
+        this.cloudStore.collection('products')
+            .doc(productId).update(data)
+    }
 
     deleteFromBasket(productId: string) {
         const activeOrder = this.cloudStore.collection(this.basketPath).doc('activeOrder')

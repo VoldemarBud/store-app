@@ -18,39 +18,46 @@ import {AngularFireStorageModule} from '@angular/fire/compat/storage';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatBadgeModule} from '@angular/material/badge';
-import {SignInComponent} from './components/sign-in/sign-in.component';
+import {SignInComponent} from './components/auth/sign-in/sign-in.component';
 import {ProductModule} from "./product/product.module";
 import {MatInputModule} from "@angular/material/input";
-import {SignUpComponent} from "./components/sign-up/sign-up.component";
+import {SignUpComponent} from "./components/auth/sign-up/sign-up.component";
+import {ForgotPassComponent} from "./components/auth/forgot-pass/forgot-pass.component";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { ErrorSnackbarComponent } from './components/error-snackbar/error-snackbar.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    BasketComponent,
-    BaseComponent,
-    SignInComponent,
-    SignUpComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireStorageModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatBadgeModule,
-    ProductModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatInputModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        HeaderComponent,
+        FooterComponent,
+        BasketComponent,
+        BaseComponent,
+        SignInComponent,
+        SignUpComponent,
+        ForgotPassComponent,
+        ErrorSnackbarComponent,
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFireStorageModule,
+        ProductModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatBadgeModule,
+        MatButtonModule,
+        MatInputModule,
+        MatSnackBarModule,
+        FormsModule,
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}

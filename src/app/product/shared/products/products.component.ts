@@ -6,6 +6,7 @@ import {DialogBoxComponent} from '../dialog-box/dialog-box.component';
 import {ProductService} from '../../../services/product.service';
 import {QueryFn} from "../../../models/queryFn";
 import {ActivatedRoute, Data} from "@angular/router";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
     selector: 'app-products',
@@ -14,10 +15,11 @@ import {ActivatedRoute, Data} from "@angular/router";
 })
 export class ProductsComponent implements OnInit {
     canView$!: Observable<boolean>;
+    canEdite!: boolean;
     products?: Observable<IProduct[]>;
     unsub = new Subject();
 
-    constructor(private productService: ProductService, private dialog: MatDialog, private route: ActivatedRoute) {
+    constructor(private productService: ProductService,private authService: AuthService,private dialog: MatDialog, private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
@@ -25,6 +27,7 @@ export class ProductsComponent implements OnInit {
         this.canView$ = this.route.data.pipe(
             map((data: Data) => data?.['data'])
         )
+        this.canEdite =this.authService.isAdmin();
     }
 
     getSorted(data: QueryFn) {
