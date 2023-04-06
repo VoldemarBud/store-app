@@ -19,7 +19,10 @@ export class ProductsComponent implements OnInit {
     products?: Observable<IProduct[]>;
     unsub = new Subject();
 
-    constructor(private productService: ProductService,private authService: AuthService,private dialog: MatDialog, private route: ActivatedRoute) {
+    constructor(private productService: ProductService,
+                private authService: AuthService,
+                private dialog: MatDialog,
+                private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {

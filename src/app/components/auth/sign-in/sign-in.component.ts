@@ -34,9 +34,9 @@ export class SignInComponent {
         if (this.singInFrom.valid) {
             this.authService.login(this.singInFrom.value)
            this.authService.isLoggedIn().pipe(filter(data=>data)).subscribe(()=>{
-               this.router.navigate(['home'])
                this.unsub.next(true);
                this.unsub.complete();
+               this.router.navigate(['home'])
            })
         }
     }

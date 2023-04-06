@@ -12,6 +12,7 @@ export class ProductResolver implements Resolve<IProduct> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IProduct> {
-    return this.store.collection('products').doc(route.params?.['id']).valueChanges({idField: 'id'}) as Observable<IProduct>
+    return this.store.collection('products').doc(route.params?.['id'])
+        .valueChanges({idField: 'id'}) as Observable<IProduct>
   }
 }

@@ -84,7 +84,7 @@ export class AuthService {
     }
 
     private setRole(id: string) {
-        this.cloudStore.collection(this.usersPath).doc(id).set({role: "user"})
+        this.cloudStore.collection('users').doc(id).set({role: "user"})
     }
 
 

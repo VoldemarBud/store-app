@@ -25,6 +25,8 @@ import {SignUpComponent} from "./components/auth/sign-up/sign-up.component";
 import {ForgotPassComponent} from "./components/auth/forgot-pass/forgot-pass.component";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MessageSnackbarComponent} from './components/snackbars/message-snackbar/message-snackbar.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
     declarations: [
@@ -37,6 +39,7 @@ import {MessageSnackbarComponent} from './components/snackbars/message-snackbar/
         SignUpComponent,
         ForgotPassComponent,
         MessageSnackbarComponent,
+        ConfirmDialogComponent,
     ],
     imports: [
         BrowserModule,
@@ -50,6 +53,7 @@ import {MessageSnackbarComponent} from './components/snackbars/message-snackbar/
         MatFormFieldModule,
         MatIconModule,
         MatToolbarModule,
+        MatDialogModule,
         MatBadgeModule,
         MatButtonModule,
         MatInputModule,

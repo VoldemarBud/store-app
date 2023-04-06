@@ -25,7 +25,6 @@ const routes: Routes = [
         path: 'product/:id',
         component: ProductDetailsComponent,
         resolve: {data: ProductResolver},
-        canActivate: [AuthGuard]
     },
     {
         path: 'basket', component: BasketComponent, canActivate: [AuthGuard]

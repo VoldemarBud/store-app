@@ -1,13 +1,14 @@
 <div class="container gap-10">
-  <div class="product-img flex-1 ">
-    <img width="200px" height="200px" [src]=(product|async)?.image?.imgUrl [alt]=(product|async)?.image?.imgName>
-  </div>
-  <div class="flex-2 product-description">
-    <h3 class="text-center page-title">{{(product|async)?.title}}</h3>
-    <p>Year: {{(product|async)?.configure?.year}}</p>
-    <p>{{(product|async)?.price|currency}}</p>
-    <p>Description: {{(product|async)?.description}}</p>
-    <button class="bg-purple" *ngIf="(canView$|async)" mat-button>Add to basket</button>
-
-  </div>
+    <div class="flex-2 product-description">
+        <h3 class="text-center page-title">{{(product$|async)?.title}}</h3>
+        <p>Year: {{(product$|async)?.configure?.year}}</p>
+        <p>{{(product$|async)?.price|currency}}</p>
+        <p>Description: {{(product$|async)?.description}}</p>
+        <button class="bg-purple mr-10" *ngIf="(canView$|async)" (click)="addToBasket()" mat-button>Add to basket
+        </button>
+        <button *ngIf="canDelete"  (click)="confirmDelete()" mat-raised-button>Delete product</button>
+    </div>
+    <div class="product-img flex-1 ">
+        <img width="200px" height="200px" [src]=(product$|async)?.image?.imgUrl [alt]=(product$|async)?.image?.imgName>
+    </div>
 </div>
