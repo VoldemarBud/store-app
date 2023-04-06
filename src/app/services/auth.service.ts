@@ -4,8 +4,7 @@ import {LoginWithEmail} from "../models/loginWithEmail";
 import {BehaviorSubject, take} from "rxjs";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {IUser} from "../models/user";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {ErrorSnackbarComponent} from "../components/snackbars/error-snackbar/error-snackbar.component";
+import {SnackbarService} from "./snackbar.service";
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +17,7 @@ export class AuthService {
     constructor(
         private cloudStore: AngularFirestore,
         private fireAuth: AngularFireAuth,
-        private _snackBar: MatSnackBar
+        private snackbarService: SnackbarService
     ) {
     }
 
@@ -35,9 +34,10 @@ export class AuthService {
             .then((data) => {
                 this.getRole(data.user!.uid)
                 this._isLoggedIn.next(true);
+                this.snackbarService.showMessage('Success',['success'])
             })
             .catch(({message}) => {
-                this.showErrorMessage(`${message.substring(message.indexOf(':') + 2, message.lastIndexOf('(') - 1)} `);
+                this.snackbarService.showMessage(`${message.substring(message.indexOf(':') + 2, message.lastIndexOf('(') - 1)} `,['warning']);
             })
     }
 
@@ -49,9 +49,10 @@ export class AuthService {
             }).then(data => {
             this.getRole(data);
             this._isLoggedIn.next(true);
+            this.snackbarService.showMessage('Success',['success'])
         })
             .catch(({message}) => {
-                this.showErrorMessage(`${message.substring(message.indexOf(':') + 2, message.lastIndexOf('(') - 1)} `);
+                this.snackbarService.showMessage(`${message.substring(message.indexOf(':') + 2, message.lastIndexOf('(') - 1)} `,['warning']);
             })
     }
 
@@ -61,7 +62,7 @@ export class AuthService {
                 console.log(data);
                 // this.router.navigate(['sing-in'])
             }).catch(({message}) => {
-              this.showErrorMessage(message)
+              this.snackbarService.showMessage(message,['warning'])
             })
     }
 
@@ -69,7 +70,7 @@ export class AuthService {
         this.fireAuth.signOut().then(() => {
             this._isLoggedIn.next(false);
         }).catch(err => {
-            this.showErrorMessage(err);
+            this.snackbarService.showMessage(err,['warning']);
         })
     }
 
@@ -85,13 +86,5 @@ export class AuthService {
         this.cloudStore.collection('users').doc(id).set({role: "user"})
     }
 
-    private showErrorMessage(message: string) {
-        this._snackBar.openFromComponent(
-            ErrorSnackbarComponent,
-            {
-                data: message,
-                duration: 3000
-            }
-        )
-    }
+
 }

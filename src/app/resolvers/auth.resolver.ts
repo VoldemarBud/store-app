@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import {Resolve} from '@angular/router';
 import {Observable} from 'rxjs';
-import {IProduct} from '../models/product/product';
-import {AngularFirestore} from '@angular/fire/compat/firestore';
-import {AuthService} from "./auth.service";
+import {AuthService} from "../services/auth.service";
 
 @Injectable({
   providedIn: 'root'

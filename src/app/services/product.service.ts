@@ -4,10 +4,7 @@ import {AngularFireStorage} from '@angular/fire/compat/storage';
 import {filter, first, map, Observable, of, shareReplay, switchMap} from 'rxjs';
 import {IProduct} from '../models/product/product';
 import {QueryFn} from "../models/queryFn";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {
-    AddToBasketSnackbarComponent
-} from "../components/snackbars/add-to-basket-snackbar/add-to-basket-snackbar.component";
+import {SnackbarService} from "./snackbar.service";
 
 @Injectable({
     providedIn: 'root'
@@ -16,13 +13,13 @@ export class ProductService {
     private readonly productsPath: string = 'products';
     private readonly basketPath: string = 'basket';
 
-    getTotalProductInBasket$ : Observable<any> = this.getTotalProductInBasket()
-    basketProducts$ : Observable<any> = this.basketProducts()
+    getTotalProductInBasket$: Observable<any> = this.getTotalProductInBasket()
+    basketProducts$: Observable<any> = this.basketProducts()
 
     constructor(
         private cloudStore: AngularFirestore,
         private storage: AngularFireStorage,
-        private _snackBar: MatSnackBar
+        private snackbarService: SnackbarService
     ) {
     }
 
@@ -58,22 +55,22 @@ export class ProductService {
                 first(),
                 switchMap((oldData: any) => {
                     if (!oldData.productsId.includes(productId)) {
-                        this.showMessage('Added to basket');
+                        this.snackbarService.showMessage('Added to basket',['success'])
                         return activeOrder.update({
                             productsId: [...oldData.productsId, productId]
                         })
                     }
-                    this.showMessage('You have product in basket');
+                    this.snackbarService.showMessage('You have product in basket',['warning'])
                     return of(oldData);
                 })
             )
     }
 
-     getTotalProductInBasket() {
+    getTotalProductInBasket() {
         return this.cloudStore.collection(this.basketPath).doc('activeOrder').valueChanges().pipe(shareReplay(1))
     }
 
-     basketProducts() {
+    basketProducts() {
         return this.getTotalProductInBasket$.pipe(
             filter(data => !!data),
             switchMap((basketItems: any) => {
@@ -88,26 +85,34 @@ export class ProductService {
         ) as Observable<IProduct[]>
     }
 
-    addProduct(data:IProduct){
+    addProduct(data: IProduct) {
         this.cloudStore.collection('products')
             .add(data)
-        this.showMessage('Product added');
+            .then(() => {
+                this.snackbarService.showMessage('Product added',['success']);
+            }).catch((error) => {
+            this.snackbarService.showMessage(error.message ,['warning'])
+        });
     }
 
-    editeProduct(productId:string,data:IProduct){
+    editeProduct(productId: string, data: IProduct) {
         this.cloudStore.collection('products')
-            .doc(productId).update(data);
-        this.showMessage('Product edited')
+            .doc(productId).update(data)
+            .then(() => {
+                this.snackbarService.showMessage('Product edited',['success'])
+            }).catch((error) => {
+                this.snackbarService.showMessage(error.message,['warning'])
+            });
     }
 
     deleteFromBasket(productId: string) {
         const activeOrder = this.cloudStore.collection(this.basketPath).doc('activeOrder')
-        this.showMessage('Product delete from basket')
         return activeOrder
             .valueChanges().pipe(
                 filter((data) => !!data),
                 first(),
                 switchMap((oldData: any) => {
+                    this.snackbarService.showMessage('Product delete from basket',['success'])
                     return activeOrder.update({
                         productsId: oldData.productsId.filter((product: string) => product !== productId)
                     })
@@ -115,15 +120,14 @@ export class ProductService {
             )
     }
 
-    private showMessage(message:string) {
-        this._snackBar.openFromComponent(
-            AddToBasketSnackbarComponent,
-            {
-                data: message,
-                duration: 3000,
-                verticalPosition: 'bottom',
-                horizontalPosition: "left"
-            }
-        )
+    deleteProduct(productId: string) {
+        this.cloudStore.collection(this.productsPath).doc(productId).delete()
+            .then(() => {
+                this.snackbarService.showMessage('Product delete',['success'])
+            })
+            .catch((error) => {
+                this.snackbarService.showMessage(error.message,['warning'])
+            });
     }
+
 }

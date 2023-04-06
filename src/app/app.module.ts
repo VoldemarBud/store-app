@@ -24,8 +24,7 @@ import {MatInputModule} from "@angular/material/input";
 import {SignUpComponent} from "./components/auth/sign-up/sign-up.component";
 import {ForgotPassComponent} from "./components/auth/forgot-pass/forgot-pass.component";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import { ErrorSnackbarComponent } from './components/snackbars/error-snackbar/error-snackbar.component';
-import { AddToBasketSnackbarComponent } from './components/snackbars/add-to-basket-snackbar/add-to-basket-snackbar.component';
+import {MessageSnackbarComponent} from './components/snackbars/message-snackbar/message-snackbar.component';
 
 @NgModule({
     declarations: [
@@ -37,8 +36,7 @@ import { AddToBasketSnackbarComponent } from './components/snackbars/add-to-bask
         SignInComponent,
         SignUpComponent,
         ForgotPassComponent,
-        ErrorSnackbarComponent,
-        AddToBasketSnackbarComponent,
+        MessageSnackbarComponent,
     ],
     imports: [
         BrowserModule,

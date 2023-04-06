@@ -1,8 +1,138 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0;   font-family: 'Alkatra', cursive; }
- .mat-mdc-snack-bar-container .mdc-snackbar__surface{
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Alkatra', cursive;
+}
+
+.container {
+  padding: 10px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.bg-purple {
+  color: #fff !important;
+  background: purple !important;
+}
+
+.warning {
+  color: #f44336 !important;
+
+  .message-snackbar {
+    color: #f44336 !important;
+
+  }
+}
+
+.success {
+  color: limegreen !important;
+
+  .message-snackbar {
+    color: limegreen !important;
+  }
+
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-2 {
+  flex: 2;
+}
+
+.flex-direction-column {
+  flex-direction: column !important;
+}
+
+.items-center {
+  align-items: center !important;
+}
+
+.items-flex-start {
+  align-items: flex-start;
+}
+
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+
+.justify-space-between {
+  justify-content: space-between !important;
+}
+
+.justify-center {
+  justify-content: center !important;
+}
+
+.gap-10 {
+  gap: 10px;
+}
+
+.direction-column {
+  flex-direction: column;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.border-b-1 {
+  border-bottom: 1px solid lightgray;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.no-select {
+  user-select: none;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.p-16 {
+  padding: 16px !important;
+}
+
+.pt-8 {
+  padding-top: 8px !important;
+}
+
+.my-10 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.min-h-100 {
+  min-height: 100%;
+}
+
+.max-height-auto {
+  max-height: initial !important;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
   min-width: auto !important;
   background-color: #ffffff !important
 }

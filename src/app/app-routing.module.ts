@@ -4,11 +4,11 @@ import {BaseComponent} from './components/base/base.component';
 import {ProductsComponent} from './product/shared/products/products.component';
 import {ProductDetailsComponent} from './product/shared/product-details/product-details.component';
 import {BasketComponent} from './components/basket/basket.component';
-import {ProductResolver} from './services/product.resolver';
+import {ProductResolver} from './resolvers/product.resolver';
 import {SignInComponent} from './components/auth/sign-in/sign-in.component';
 import {AuthGuard} from './guards/auth.guard';
 import {LoginGuard} from "./guards/login.guard";
-import {AuthResolver} from "./services/auth.resolver";
+import {AuthResolver} from "./resolvers/auth.resolver";
 import {SignUpComponent} from "./components/auth/sign-up/sign-up.component";
 import {ForgotPassComponent} from "./components/auth/forgot-pass/forgot-pass.component";
 
