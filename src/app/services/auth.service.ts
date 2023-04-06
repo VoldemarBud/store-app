@@ -10,6 +10,7 @@ import {SnackbarService} from "./snackbar.service";
     providedIn: 'root'
 })
 export class AuthService {
+    private readonly usersPath: string = 'users';
 
     private _isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(false);
     private _userRole: BehaviorSubject<IUser> = new BehaviorSubject({});
@@ -75,7 +76,7 @@ export class AuthService {
     }
 
     private getRole(uid: string) {
-        this.cloudStore.collection('users').doc(uid).valueChanges()
+        this.cloudStore.collection(this.usersPath).doc(uid).valueChanges()
             .pipe(take(1))
             .toPromise().then(user => {
             this._userRole.next(<IUser>user)
@@ -83,7 +84,7 @@ export class AuthService {
     }
 
     private setRole(id: string) {
-        this.cloudStore.collection('users').doc(id).set({role: "user"})
+        this.cloudStore.collection(this.usersPath).doc(id).set({role: "user"})
     }
 
 
