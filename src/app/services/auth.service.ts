@@ -58,10 +58,12 @@ export class AuthService {
     }
 
     forgotPass(email: string) {
+        //need add fix
         return this.fireAuth.sendPasswordResetEmail(email)
             .then((data) => {
                 console.log(data);
                 // this.router.navigate(['sing-in'])
+                // have error value(email) from firebase
             }).catch(({message}) => {
               this.snackbarService.showMessage(message,['warning'])
             })
