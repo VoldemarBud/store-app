@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {AngularFireStorage} from '@angular/fire/compat/storage';
-import {filter, first, map, Observable, of, shareReplay, switchMap} from 'rxjs';
+import {Observable} from 'rxjs';
 import {IProduct} from '../models/product/product';
 import {QueryFn} from "../models/queryFn";
 import {SnackbarService} from "./snackbar.service";

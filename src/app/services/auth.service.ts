@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {LoginWithEmail} from "../models/loginWithEmail";
-import {BehaviorSubject, take} from "rxjs";
+import {BehaviorSubject, filter, map, take} from "rxjs";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {IUser} from "../models/user";
 import {SnackbarService} from "./snackbar.service";
@@ -40,15 +40,25 @@ export class AuthService {
             .catch(({message}) => {
                 this.snackbarService.showMessage(`${message.substring(message.indexOf(':') + 2, message.lastIndexOf('(') - 1)} `,['warning']);
             })
+
+
     }
+
+    getUserId(){
+        return   this.fireAuth.user.pipe(
+            map(data=>data?.uid)
+        )
+    }
+
 
     registration({email, password}: LoginWithEmail) {
         this.fireAuth.createUserWithEmailAndPassword(email, password)
             .then((data) => {
-                this.setRole(data.user!.uid);
+                this.setUserConfig(data.user!.uid);
                 return data.user!.uid
             }).then(data => {
             this.getRole(data);
+
             this._isLoggedIn.next(true);
             this.snackbarService.showMessage('Success',['success'])
         })
@@ -85,9 +95,12 @@ export class AuthService {
         })
     }
 
-    private setRole(id: string) {
-        this.cloudStore.collection('users').doc(id).set({role: "user"})
+    private setUserConfig(id: string) {
+        this.cloudStore.collection('users').doc(id).set(
+            {
+                basket:[],
+                role: "user"
+            }
+        )
     }
-
-
 }

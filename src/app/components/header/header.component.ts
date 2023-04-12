@@ -16,7 +16,6 @@ export class HeaderComponent implements OnInit {
     private unsub = new Subject();
 
     constructor(
-        private productService: ProductService,
         private basketService: BasketService,
         private authService: AuthService,
         private router: Router
@@ -25,7 +24,7 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void {
         this.canView$ = this.authService.isLoggedIn();
-        this.badge = this.basketService.getTotalProductInBasket$.pipe(filter(data => !!data));
+        this.badge = this.basketService.getProductInBasket$.pipe(filter(data => !!data));
     }
 
     onLogout() {

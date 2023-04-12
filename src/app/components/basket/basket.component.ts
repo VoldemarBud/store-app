@@ -1,40 +1,39 @@
 import {Component, OnInit} from '@angular/core';
-import {map, Observable, Subject, takeUntil} from 'rxjs';
+import {Observable, Subject, takeUntil} from 'rxjs';
 import {IProduct} from '../../models/product/product';
 import {BasketService} from "../../services/basket.service";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
-  selector: 'app-basket',
-  templateUrl: './basket.component.html',
-  styleUrls: ['./basket.component.scss']
+    selector: 'app-basket',
+    templateUrl: './basket.component.html',
+    styleUrls: ['./basket.component.scss']
 })
 export class BasketComponent implements OnInit {
-  badgeProducts$!: Observable<IProduct[]>;
-  totalPrice$!: Observable<number>;
-  unSub = new Subject();
+    badgeProducts$!: Observable<IProduct[]>;
+    totalPrice$!: Observable<number>;
+    unSub = new Subject();
 
-  constructor(private basketService: BasketService) {
-  }
+    userID$!: Observable<any>
 
-  ngOnInit(): void {
-    this.badgeProducts$ = this.basketService.basketProducts$
-    this.totalPrice$ = this.totalPrice()
-  }
+    constructor(
+        private basketService: BasketService,
+        private authService: AuthService
+    ) {
+    }
+
+    ngOnInit(): void {
+        this.badgeProducts$ = this.basketService.basketProducts$
+        this.totalPrice$ = this.basketService.totalPrice()
+    }
 
 
-   totalPrice() {
-    return this.basketService.basketProducts$.pipe(
-      map(data => data.map((data:IProduct) => data.price)
-        .reduce((sum:number, price:number) => sum + price, 0)),
-    )
-  }
-
-  deleteFromBasket(id: string) {
-    this.basketService.deleteFromBasket(id)
-      .pipe(takeUntil(this.unSub))
-      .subscribe(() => {
-      this.unSub.next(true);
-      this.unSub.complete();
-    });
-  }
+    deleteFromBasket(id: string) {
+        this.basketService.deleteFromBasket(id)
+            .pipe(takeUntil(this.unSub))
+            .subscribe(() => {
+                this.unSub.next(true);
+                this.unSub.complete();
+            });
+    }
 }
