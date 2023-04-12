@@ -7,6 +7,7 @@ import {ProductService} from '../../../services/product.service';
 import {QueryFn} from "../../../models/queryFn";
 import {ActivatedRoute, Data} from "@angular/router";
 import {AuthService} from "../../../services/auth.service";
+import {BasketService} from "../../../services/basket.service";
 
 @Component({
     selector: 'app-products',
@@ -20,6 +21,7 @@ export class ProductsComponent implements OnInit {
     unsub = new Subject();
 
     constructor(private productService: ProductService,
+                private basketService :BasketService,
                 private authService: AuthService,
                 private dialog: MatDialog,
                 private route: ActivatedRoute) {
@@ -38,7 +40,7 @@ export class ProductsComponent implements OnInit {
     }
 
     addToBasket(id: string): void {
-        this.productService.addToBasket(id)
+        this.basketService.addToBasket(id)
             .pipe(takeUntil(this.unsub))
             .subscribe(() => {
                     this.unsub.next(true);
