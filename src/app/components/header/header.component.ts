@@ -3,6 +3,7 @@ import {ProductService} from '../../services/product.service';
 import {filter, Observable, Subject} from 'rxjs';
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
+import {BasketService} from "../../services/basket.service";
 
 @Component({
     selector: 'app-header',
@@ -16,6 +17,7 @@ export class HeaderComponent implements OnInit {
 
     constructor(
         private productService: ProductService,
+        private basketService: BasketService,
         private authService: AuthService,
         private router: Router
     ) {
@@ -23,7 +25,7 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void {
         this.canView$ = this.authService.isLoggedIn();
-        this.badge = this.productService.getTotalProductInBasket$.pipe(filter(data => !!data));
+        this.badge = this.basketService.getTotalProductInBasket$.pipe(filter(data => !!data));
     }
 
     onLogout() {

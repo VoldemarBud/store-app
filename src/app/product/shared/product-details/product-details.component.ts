@@ -6,6 +6,7 @@ import {AuthService} from "../../../services/auth.service";
 import {ProductService} from "../../../services/product.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmDialogComponent} from "../../../components/confirm-dialog/confirm-dialog.component";
+import {BasketService} from "../../../services/basket.service";
 
 @Component({
     selector: 'app-product-details',
@@ -21,6 +22,7 @@ export class ProductDetailsComponent implements OnInit {
     constructor(
         private dialogConfirm: MatDialog,
         private productService: ProductService,
+        private basketService: BasketService,
         private route: ActivatedRoute,
         private router: Router,
         private authService: AuthService) {
@@ -36,7 +38,7 @@ export class ProductDetailsComponent implements OnInit {
 
     async addToBasket() {
         const product = await firstValueFrom(this.product$)
-        this.productService.addToBasket(product.id)
+        this.basketService.addToBasket(product.id)
             .pipe(takeUntil(this.unsub))
             .subscribe(() => {
                     this.unsub.next(true);

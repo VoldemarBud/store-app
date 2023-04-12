@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {map, Observable, Subject, takeUntil} from 'rxjs';
-import {ProductService} from '../../services/product.service';
 import {IProduct} from '../../models/product/product';
+import {BasketService} from "../../services/basket.service";
 
 @Component({
   selector: 'app-basket',
@@ -13,24 +13,24 @@ export class BasketComponent implements OnInit {
   totalPrice$!: Observable<number>;
   unSub = new Subject();
 
-  constructor(private productService: ProductService) {
+  constructor(private basketService: BasketService) {
   }
 
   ngOnInit(): void {
-    this.badgeProducts$ = this.productService.basketProducts$
+    this.badgeProducts$ = this.basketService.basketProducts$
     this.totalPrice$ = this.totalPrice()
   }
-  
+
 
    totalPrice() {
-    return this.productService.basketProducts$.pipe(
+    return this.basketService.basketProducts$.pipe(
       map(data => data.map((data:IProduct) => data.price)
         .reduce((sum:number, price:number) => sum + price, 0)),
     )
   }
 
   deleteFromBasket(id: string) {
-    this.productService.deleteFromBasket(id)
+    this.basketService.deleteFromBasket(id)
       .pipe(takeUntil(this.unSub))
       .subscribe(() => {
       this.unSub.next(true);
