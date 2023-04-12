@@ -23,6 +23,13 @@ export class BasketComponent implements OnInit {
         this.totalPrice$ = this.basketService.totalPrice()
     }
 
+    createOrder() {
+        this.basketService.completeOrder().pipe(takeUntil(this.unSub))
+            .subscribe(() => {
+                this.unSub.next(true);
+                this.unSub.complete();
+            });
+    }
 
     deleteFromBasket(id: string) {
         this.basketService.deleteFromBasket(id)

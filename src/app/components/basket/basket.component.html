@@ -14,7 +14,7 @@
       </div>
 
     <div class="total-price">Total: <span>{{totalPrice$|async|currency}}</span></div>
-    <button class="mt-10 bg-purple" mat-button >Create Order</button>
+    <button class="mt-10 bg-purple" (click)="createOrder()" mat-button >Create Order</button>
 
   </div>
 </div>

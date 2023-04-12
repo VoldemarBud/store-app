@@ -10,7 +10,6 @@ import {AuthService} from "./auth.service";
     providedIn: 'root'
 })
 export class BasketService {
-    private readonly basketPath: string = 'basket';
     private readonly usersPath: string = 'users';
 
     getProductInBasket$: Observable<any> = this.getProductInBasket()
@@ -108,22 +107,25 @@ export class BasketService {
 
 
     completeOrder() {
-        this.authService.getUserId().pipe(
+      return this.authService.getUserId().pipe(
             filter(id => !!id),
             switchMap((id) => {
-                const activeOrderRef = this.cloudStore.collection(this.basketPath).doc('activeOrder');
+                const activeOrderRef = this.cloudStore.collection(this.usersPath).doc(id);
                 return activeOrderRef.valueChanges().pipe(
                     switchMap((activeOrder: any) => {
                         return this.totalPrice().pipe(
                             map(totalPrice => {
                                 this.cloudStore.collection('users').doc(id).collection('completeOrders').add({
                                     dataOrder: new Date(),
-                                    products: activeOrder.productsId,
+                                    products: activeOrder.basket,
                                     totalPrice
                                 }).then(() => {
+                                    this.snackbarService.showMessage('Order Created', ['success'])
                                     activeOrderRef.update({
-                                        productsId: []
+                                        basket: []
                                     })
+                                }).catch(({message}) => {
+                                    this.snackbarService.showMessage(`${message.substring(message.indexOf(':') + 2, message.lastIndexOf('(') - 1)} `, ['warning']);
                                 })
                             })
                         )
