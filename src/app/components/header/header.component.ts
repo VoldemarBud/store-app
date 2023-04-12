@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ProductService} from '../../services/product.service';
 import {filter, Observable, Subject} from 'rxjs';
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";

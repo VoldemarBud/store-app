@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Observable, Subject, takeUntil} from 'rxjs';
 import {IProduct} from '../../models/product/product';
 import {BasketService} from "../../services/basket.service";
-import {AuthService} from "../../services/auth.service";
 
 @Component({
     selector: 'app-basket',
@@ -14,11 +13,8 @@ export class BasketComponent implements OnInit {
     totalPrice$!: Observable<number>;
     unSub = new Subject();
 
-    userID$!: Observable<any>
-
     constructor(
-        private basketService: BasketService,
-        private authService: AuthService
+        private basketService: BasketService
     ) {
     }
 

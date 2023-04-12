@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {LoginWithEmail} from "../models/loginWithEmail";
-import {BehaviorSubject, filter, map, take} from "rxjs";
+import {BehaviorSubject, map, take} from "rxjs";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {IUser} from "../models/user";
 import {SnackbarService} from "./snackbar.service";
