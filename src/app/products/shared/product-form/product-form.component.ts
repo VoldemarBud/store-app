@@ -3,12 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProductService} from '../../../services/product.service';
 import {filter, Subject, switchMap, takeUntil} from 'rxjs';
-import {IProduct} from 'src/app/models/product/product';
-
-interface DialogData {
-    title: string,
-    product?: IProduct
-}
+import {DialogData} from "../../../models/dialogData";
 
 @Component({
     selector: 'app-product-form',
