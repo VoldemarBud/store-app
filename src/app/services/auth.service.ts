@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {LoginWithEmail} from "../models/loginWithEmail";
 import {BehaviorSubject, map, take} from "rxjs";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {IUser} from "../models/user";
 import {SnackbarService} from "./snackbar.service";
+import {AngularFireAuth} from "@angular/fire/compat/auth";
+import {UserMetaDate} from "../models/userMetaDate";
 
 @Injectable({
     providedIn: 'root'
@@ -32,20 +33,20 @@ export class AuthService {
 
     login({email, password}: LoginWithEmail) {
         this.fireAuth.signInWithEmailAndPassword(email, password)
-            .then((data) => {
-                this.getRole(data.user!.uid)
+            .then(({user}) => {
+                this.getRole(user!.uid)
+                this.updateUserDate(user!.uid, user!.metadata)
                 this._isLoggedIn.next(true);
-                this.snackbarService.showMessage('Success',['success'])
+                this.snackbarService.showMessage('Success', ['success'])
             })
             .catch(({message}) => {
-                this.snackbarService.showMessage(`${message.substring(message.indexOf(':') + 2, message.lastIndexOf('(') - 1)} `,['warning']);
+                this.snackbarService.showMessage(message, ['warning']);
             })
-        this.fireAuth.user.subscribe(console.log)
     }
 
-    getUserId(){
-        return   this.fireAuth.user.pipe(
-            map(data=>data?.uid)
+    getUserId() {
+        return this.fireAuth.user.pipe(
+            map(data => data?.uid)
         )
     }
 
@@ -53,15 +54,15 @@ export class AuthService {
     registration({email, password}: LoginWithEmail) {
         this.fireAuth.createUserWithEmailAndPassword(email, password)
             .then((data) => {
-                this.setUserConfig(data.user!.uid,email);
+                this.setUserConfig(data.user!.uid, email, data.user!.metadata);
                 return data.user!.uid
             }).then(data => {
             this.getRole(data);
             this._isLoggedIn.next(true);
-            this.snackbarService.showMessage('Success',['success'])
+            this.snackbarService.showMessage('Success', ['success'])
         })
             .catch(({message}) => {
-                this.snackbarService.showMessage(`${message.substring(message.indexOf(':') + 2, message.lastIndexOf('(') - 1)} `,['warning']);
+                this.snackbarService.showMessage(message, ['warning']);
             })
     }
 
@@ -73,7 +74,7 @@ export class AuthService {
                 // this.router.navigate(['sing-in'])
                 // have error value(email) from firebase
             }).catch(({message}) => {
-              this.snackbarService.showMessage(message,['warning'])
+                this.snackbarService.showMessage(message, ['warning'])
             })
     }
 
@@ -81,7 +82,7 @@ export class AuthService {
         this.fireAuth.signOut().then(() => {
             this._isLoggedIn.next(false);
         }).catch(err => {
-            this.snackbarService.showMessage(err,['warning']);
+            this.snackbarService.showMessage(err, ['warning']);
         })
     }
 
@@ -93,12 +94,23 @@ export class AuthService {
         })
     }
 
-    private setUserConfig(id: string,email:string) {
-        this.cloudStore.collection('users').doc(id).set(
+    private updateUserDate(id: string, metaDate: UserMetaDate) {
+        this.cloudStore.collection(this.usersPath).doc(id).update({
+            metaDate: {
+                ...metaDate
+            }
+        })
+    }
+
+    private setUserConfig(id: string, email: string, metaDate: UserMetaDate) {
+        this.cloudStore.collection(this.usersPath).doc(id).set(
             {
                 email,
-                basket:[],
-                role: "user"
+                basket: [],
+                role: "user",
+                metaDate: {
+                    ...metaDate
+                }
             }
         )
     }
