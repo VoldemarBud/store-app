@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {BaseComponent} from './components/base/base.component';
-import {ProductsComponent} from './product/shared/products/products.component';
-import {ProductDetailsComponent} from './product/shared/product-details/product-details.component';
+import {ProductsComponent} from './products/shared/products/products.component';
+import {ProductDetailsComponent} from './products/shared/product-details/product-details.component';
 import {BasketComponent} from './components/basket/basket.component';
 import {ProductResolver} from './resolvers/product.resolver';
 import {SignInComponent} from './components/auth/sign-in/sign-in.component';
@@ -22,7 +22,7 @@ const routes: Routes = [
         path: 'products', component: ProductsComponent, resolve: {data: AuthResolver}
     },
     {
-        path: 'product/:id',
+        path: 'products/:id',
         component: ProductDetailsComponent,
         resolve: {data: ProductResolver},
     },

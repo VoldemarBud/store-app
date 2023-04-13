@@ -19,7 +19,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatBadgeModule} from '@angular/material/badge';
 import {SignInComponent} from './components/auth/sign-in/sign-in.component';
-import {ProductModule} from "./product/product.module";
+import {ProductModule} from "./products/product.module";
 import {MatInputModule} from "@angular/material/input";
 import {SignUpComponent} from "./components/auth/sign-up/sign-up.component";
 import {ForgotPassComponent} from "./components/auth/forgot-pass/forgot-pass.component";
@@ -27,6 +27,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MessageSnackbarComponent} from './components/snackbars/message-snackbar/message-snackbar.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { OrderHistoryComponent } from './components/order-history/order-history.component';
 
 @NgModule({
     declarations: [
@@ -40,6 +41,7 @@ import {MatDialogModule} from "@angular/material/dialog";
         ForgotPassComponent,
         MessageSnackbarComponent,
         ConfirmDialogComponent,
+        OrderHistoryComponent,
     ],
     imports: [
         BrowserModule,
