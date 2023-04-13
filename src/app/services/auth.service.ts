@@ -40,8 +40,7 @@ export class AuthService {
             .catch(({message}) => {
                 this.snackbarService.showMessage(`${message.substring(message.indexOf(':') + 2, message.lastIndexOf('(') - 1)} `,['warning']);
             })
-
-
+        this.fireAuth.user.subscribe(console.log)
     }
 
     getUserId(){
@@ -54,11 +53,10 @@ export class AuthService {
     registration({email, password}: LoginWithEmail) {
         this.fireAuth.createUserWithEmailAndPassword(email, password)
             .then((data) => {
-                this.setUserConfig(data.user!.uid);
+                this.setUserConfig(data.user!.uid,email);
                 return data.user!.uid
             }).then(data => {
             this.getRole(data);
-
             this._isLoggedIn.next(true);
             this.snackbarService.showMessage('Success',['success'])
         })
@@ -95,9 +93,10 @@ export class AuthService {
         })
     }
 
-    private setUserConfig(id: string) {
+    private setUserConfig(id: string,email:string) {
         this.cloudStore.collection('users').doc(id).set(
             {
+                email,
                 basket:[],
                 role: "user"
             }
