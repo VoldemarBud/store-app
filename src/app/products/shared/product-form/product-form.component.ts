@@ -11,12 +11,12 @@ interface DialogData {
 }
 
 @Component({
-    selector: 'app-dialog-box',
-    templateUrl: './dialog-box.component.html',
-    styleUrls: ['./dialog-box.component.scss']
+    selector: 'app-product-form',
+    templateUrl: './product-form.component.html',
+    styleUrls: ['./product-form.component.scss']
 })
 
-export class DialogBoxComponent implements OnInit {
+export class ProductFormComponent implements OnInit {
     private imageFile?: File;
     private newFileName!: string;
     private unsub = new Subject();
@@ -53,7 +53,7 @@ export class DialogBoxComponent implements OnInit {
 
     constructor(
         private productService: ProductService,
-        public dialogRef: MatDialogRef<DialogBoxComponent>,
+        public dialogRef: MatDialogRef<ProductFormComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     }
 

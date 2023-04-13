@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {LoginWithEmail} from "../models/loginWithEmail";
-import {BehaviorSubject, map, take} from "rxjs";
+import {BehaviorSubject, map, Observable, take} from "rxjs";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {IUser} from "../models/user";
 import {SnackbarService} from "./snackbar.service";
@@ -27,7 +27,7 @@ export class AuthService {
         return this._userRole.value?.role === 'admin';
     }
 
-    isLoggedIn() {
+    isLoggedIn():BehaviorSubject<boolean> {
         return this._isLoggedIn;
     }
 
@@ -44,7 +44,7 @@ export class AuthService {
             })
     }
 
-    getUserId() {
+    getUserId():Observable<string|undefined> {
         return this.fireAuth.user.pipe(
             map(data => data?.uid)
         )
@@ -66,7 +66,7 @@ export class AuthService {
             })
     }
 
-    forgotPass(email: string) {
+    forgotPass(email: string):Promise<void> {
         //need add fix
         return this.fireAuth.sendPasswordResetEmail(email)
             .then((data) => {

@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {IProduct} from '../models/product/product';
 import {QueryFn} from "../models/queryFn";
 import {SnackbarService} from "./snackbar.service";
+import {UploadTaskSnapshot} from "@angular/fire/compat/storage/interfaces";
 
 @Injectable({
     providedIn: 'root'
@@ -34,11 +35,11 @@ export class ProductService {
         }
     }
 
-    uploadFile(imageFile: File, fileName: string): Observable<any> {
+    uploadFile(imageFile: File, fileName: string): Observable<UploadTaskSnapshot | undefined> {
         return this.storage.upload(this.pathUploadFile(fileName), imageFile).snapshotChanges()
     }
 
-    downloadURL(fileName: string): Observable<any> {
+    downloadURL<T>(fileName: string): Observable<T> {
         return this.storage.ref(this.pathUploadFile(fileName))
             .getDownloadURL()
     }

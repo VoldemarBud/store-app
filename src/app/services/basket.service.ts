@@ -59,14 +59,14 @@ export class BasketService {
     }
 
 
-    totalPrice() {
+    totalPrice<T>():Observable<T> {
         return this.basketProducts$.pipe(
             map(data => data.map((data: IProduct) => data.price)
                 .reduce((sum: number, price: number) => sum + price, 0)),
         )
     }
 
-    addToBasket(productId: string) {
+    addToBasket<T>(productId: string):Observable<T> {
         return this.authService.getUserId().pipe(
             shareReplay(1),
             filter(id => !!id),
@@ -83,12 +83,22 @@ export class BasketService {
                                     basket: [...oldData.basket, productId]
                                 })
                             }
-                            this.snackbarService.showMessage('You have product in basket', ['warning'])
+                            this.snackbarService.showMessage('You have products in basket', ['warning'])
                             return of(oldData);
                         })
                     )
             })
         );
+    }
+
+    orderHistory() {
+        return this.authService.getUserId().pipe(
+            shareReplay(1),
+            filter(id => !!id),
+            switchMap(id => {
+                    return this.cloudStore.collection(this.usersPath).doc(id).collection('completeOrders').valueChanges()
+                }
+            ))
     }
 
     basketProducts() {
@@ -107,7 +117,7 @@ export class BasketService {
 
 
     completeOrder() {
-      return this.authService.getUserId().pipe(
+        return this.authService.getUserId().pipe(
             filter(id => !!id),
             switchMap((id) => {
                 const activeOrderRef = this.cloudStore.collection(this.usersPath).doc(id);

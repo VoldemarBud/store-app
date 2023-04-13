@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SortPanelComponent} from "./shared/sort-panel/sort-panel.component";
-import {DialogBoxComponent} from "./shared/dialog-box/dialog-box.component";
+import {ProductFormComponent} from "./shared/product-form/product-form.component";
 import {ProductDetailsComponent} from "./shared/product-details/product-details.component";
 import {ProductsComponent} from "./shared/products/products.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -22,7 +22,7 @@ import {MatChipsModule} from "@angular/material/chips";
         ProductsComponent,
         ProductDetailsComponent,
         SortPanelComponent,
-        DialogBoxComponent,
+        ProductFormComponent,
         TruncatePipe
     ],
     imports: [

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {IProduct} from '../../../models/product/product';
 import {map, Observable, Subject, takeUntil} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
-import {DialogBoxComponent} from '../dialog-box/dialog-box.component';
+import {ProductFormComponent} from '../product-form/product-form.component';
 import {ProductService} from '../../../services/product.service';
 import {QueryFn} from "../../../models/queryFn";
 import {ActivatedRoute, Data} from "@angular/router";
@@ -50,7 +50,7 @@ export class ProductsComponent implements OnInit {
     }
 
     openDialog(product?: IProduct): void {
-        this.dialog.open(DialogBoxComponent, {
+        this.dialog.open(ProductFormComponent, {
             data: {
                 title: product ? 'Edite Product' : 'Add new Product',
                 product
