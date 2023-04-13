@@ -9,7 +9,7 @@ import {ConfirmDialogComponent} from "../../../components/confirm-dialog/confirm
 import {BasketService} from "../../../services/basket.service";
 
 @Component({
-    selector: 'app-product-details',
+    selector: 'app-products-details',
     templateUrl: './product-details.component.html',
     styleUrls: ['./product-details.component.scss']
 })
