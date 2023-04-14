@@ -17,7 +17,7 @@ import {BasketService} from "../../../services/basket.service";
 export class ProductsComponent implements OnInit {
     canView$!: Observable<boolean>;
     canEdite!: boolean;
-    products?: Observable<IProduct[]>;
+    products$?: Observable<IProduct[]>;
     unsub = new Subject();
 
     constructor(private productService: ProductService,
@@ -28,7 +28,7 @@ export class ProductsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.products = this.productService.getProducts({}).valueChanges({idField: 'id'}) as Observable<IProduct[]>;
+        this.products$ = this.productService.getProducts({}).valueChanges({idField: 'id'}) as Observable<IProduct[]>;
         this.canView$ = this.route.data.pipe(
             map((data: Data) => data?.['data'])
         )
@@ -36,7 +36,7 @@ export class ProductsComponent implements OnInit {
     }
 
     getSorted(data: QueryFn) {
-        this.products = this.productService.getProducts(data).valueChanges({idField: 'id'}) as Observable<IProduct[]>;
+        this.products$ = this.productService.getProducts(data).valueChanges({idField: 'id'}) as Observable<IProduct[]>;
     }
 
     addToBasket(id: string): void {
