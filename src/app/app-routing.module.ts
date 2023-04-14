@@ -11,6 +11,7 @@ import {LoginGuard} from "./guards/login.guard";
 import {AuthResolver} from "./resolvers/auth.resolver";
 import {SignUpComponent} from "./components/auth/sign-up/sign-up.component";
 import {ForgotPassComponent} from "./components/auth/forgot-pass/forgot-pass.component";
+import {OrderHistoryComponent} from "./components/order-history/order-history.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/sign-in', pathMatch: 'full'},
@@ -28,6 +29,9 @@ const routes: Routes = [
     },
     {
         path: 'basket', component: BasketComponent, canActivate: [AuthGuard]
+    },
+    {
+        path:'order-history', component: OrderHistoryComponent, canActivate: [AuthGuard]
     },
     {
         path: "**",
