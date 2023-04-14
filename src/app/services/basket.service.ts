@@ -24,7 +24,7 @@ export class BasketService {
     }
 
 
-    getProductInBasket() {
+    getProductInBasket():Observable<[]|undefined> {
         return this.authService.getUserId().pipe(
             shareReplay(1),
             filter(id => !!id),
@@ -37,7 +37,7 @@ export class BasketService {
 
     }
 
-    deleteFromBasket(productId: string) {
+    deleteFromBasket(productId: string):Observable<void> {
         return this.authService.getUserId().pipe(
             shareReplay(1),
             filter(id => !!id),
@@ -101,14 +101,14 @@ export class BasketService {
             ))
     }
 
-    basketProducts() {
+    basketProducts():Observable<IProduct[]> {
         return this.getProductInBasket$.pipe(
             switchMap((basketItems: any) => {
                 return this.productService.getProducts({})
                     .valueChanges({idField: 'id'})
                     .pipe(
-                        map((products) => products
-                            .filter((product) => basketItems.includes(product.id))
+                        map((products:{id:string}[]) => products
+                            .filter((product:{id:string}) => basketItems.includes(product.id))
                         )
                     );
             })
@@ -116,7 +116,7 @@ export class BasketService {
     }
 
 
-    completeOrder() {
+    completeOrder():Observable<void> {
         return this.authService.getUserId().pipe(
             filter(id => !!id),
             switchMap((id) => {
@@ -126,7 +126,7 @@ export class BasketService {
                         return this.totalPrice().pipe(
                             map(totalPrice => {
                                 this.cloudStore.collection('users').doc(id).collection('completeOrders').add({
-                                    dataOrder: new Date(),
+                                    dataOrder: new Date().getTime(),
                                     products: activeOrder.basket,
                                     totalPrice
                                 }).then(() => {
