@@ -26,7 +26,7 @@ export class ProductService {
 
     getProducts({fieldPath = 'title', directionStr}: QueryFn) {
         return this.cloudStore.collection(this.productsPath,
-            (fer) => fer.orderBy(fieldPath, directionStr))
+            (ref) => ref.orderBy(fieldPath, directionStr))
     }
 
     deleteLastFile(imageFile: File | IProduct | undefined, fileName: string): void {
