@@ -7,13 +7,22 @@
     <button routerLink="/products" mat-icon-button>
       <mat-icon>store</mat-icon>
     </button>
-    <button
-      routerLink="/basket" *ngIf="canView$|async" mat-icon-button>
-      <mat-icon
+
+
+    <ng-container  *ngIf="canView$|async">
+      <button
+              routerLink="/basket" mat-icon-button>
+        <mat-icon
                 [matBadge]="(badge|async)?.length!=0?(badge|async)?.length:null"
                 matBadgeColor="warn">shopping_basket
-      </mat-icon>
-    </button>
+        </mat-icon>
+      </button>
+      <button mat-icon-button routerLink="/order-history">
+        <mat-icon>
+          assignment
+        </mat-icon>
+      </button>
+    </ng-container>
     <button routerLink="/sign-in" *ngIf="!(canView$|async);else logout" mat-icon-button>
       <mat-icon>key</mat-icon>
     </button>
