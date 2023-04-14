@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {BasketService} from "../../services/basket.service";
 
 @Component({
   selector: 'app-order-history',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./order-history.component.scss']
 })
 export class OrderHistoryComponent {
-
+  orderHistory$ = this.basketService.orderHistory();
+constructor(private  basketService: BasketService) {
+}
 }

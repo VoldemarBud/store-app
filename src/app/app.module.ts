@@ -28,6 +28,7 @@ import {MessageSnackbarComponent} from './components/snackbars/message-snackbar/
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { OrderHistoryComponent } from './components/order-history/order-history.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
     declarations: [
@@ -61,6 +62,7 @@ import { OrderHistoryComponent } from './components/order-history/order-history.
         MatInputModule,
         MatSnackBarModule,
         FormsModule,
+        MatExpansionModule,
     ],
     providers: [],
     bootstrap: [AppComponent]
