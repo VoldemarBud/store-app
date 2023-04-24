@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {BasketService} from "../../services/basket.service";
+import {Observable} from "rxjs";
+import {OrderHistory} from "../../models/orderHistory";
 
 @Component({
   selector: 'app-order-history',
@@ -7,7 +9,7 @@ import {BasketService} from "../../services/basket.service";
   styleUrls: ['./order-history.component.scss']
 })
 export class OrderHistoryComponent {
-  orderHistory$ = this.basketService.orderHistory();
+  orderHistory$:Observable<OrderHistory[]> = this.basketService.orderHistory();
 constructor(private  basketService: BasketService) {
 }
 }
