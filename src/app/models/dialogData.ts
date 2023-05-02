@@ -1,6 +1,6 @@
-import {IProduct} from "./product/product";
+import {Product} from "./product/product";
 
 export interface DialogData {
     title: string,
-    product?: IProduct
+    product?: Product
 }

@@ -1,4 +1,4 @@
-<ng-container *ngIf="(orderHistory$|async)!.length;else emptyTitle">
+<ng-container *ngIf="(orderHistory$|async)?.length;else emptyTitle">
     <h3 class="text-center page-title">Order History</h3>
     <mat-accordion >
         <mat-expansion-panel *ngFor="let order of orderHistory$|async;let idx  = index">

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {IProduct} from '../../../models/product/product';
+import {Product} from '../../../models/product/product';
 import {map, Observable, Subject, takeUntil} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {ProductFormComponent} from '../product-form/product-form.component';
@@ -17,26 +17,28 @@ import {BasketService} from "../../../services/basket.service";
 export class ProductsComponent implements OnInit {
     canView$!: Observable<boolean>;
     canEdite!: boolean;
-    products$?: Observable<IProduct[]>;
+    products$?: Observable<Product[]>;
     unsub = new Subject();
 
     constructor(private productService: ProductService,
-                private basketService :BasketService,
+                private basketService: BasketService,
                 private authService: AuthService,
                 private dialog: MatDialog,
                 private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
-        this.products$ = this.productService.getProducts({}).valueChanges({idField: 'id'}) as Observable<IProduct[]>;
+        this.products$ = this.productService.getProducts({})
+            .valueChanges({idField: 'id'}) as Observable<Product[]>;
         this.canView$ = this.route.data.pipe(
             map((data: Data) => data?.['data'])
         )
-        this.canEdite =this.authService.isAdmin();
+        this.canEdite = this.authService.isAdmin();
     }
 
     getSorted(data: QueryFn) {
-        this.products$ = this.productService.getProducts(data).valueChanges({idField: 'id'}) as Observable<IProduct[]>;
+        this.products$ = this.productService.getProducts(data)
+            .valueChanges({idField: 'id'}) as Observable<Product[]>;
     }
 
     addToBasket(id: string): void {
@@ -49,7 +51,7 @@ export class ProductsComponent implements OnInit {
             )
     }
 
-    openDialog(product?: IProduct): void {
+    openDialog(product?: Product): void {
         this.dialog.open(ProductFormComponent, {
             data: {
                 title: product ? 'Edite Product' : 'Add new Product',

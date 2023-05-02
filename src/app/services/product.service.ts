@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {AngularFireStorage} from '@angular/fire/compat/storage';
 import {Observable} from 'rxjs';
-import {IProduct} from '../models/product/product';
+import {Product} from '../models/product/product';
 import {QueryFn} from "../models/queryFn";
 import {SnackbarService} from "./snackbar.service";
 import {UploadTaskSnapshot} from "@angular/fire/compat/storage/interfaces";
@@ -29,7 +29,7 @@ export class ProductService {
             (ref) => ref.orderBy(fieldPath, directionStr))
     }
 
-    deleteLastFile(imageFile: File | IProduct | undefined, fileName: string): void {
+    deleteLastFile(imageFile: File | Product | undefined, fileName: string): void {
         if (imageFile) {
             this.storage.ref(this.productsPath).child(fileName).delete();
         }
@@ -45,33 +45,33 @@ export class ProductService {
     }
 
 
-
-    addProduct(data: IProduct) {
+    addProduct(data: Product) {
         this.cloudStore.collection('products')
             .add(data)
             .then(() => {
-                this.snackbarService.showMessage('Product added',['success']);
+                this.snackbarService.showMessage('Product added', ['success']);
             }).catch((error) => {
-            this.snackbarService.showMessage(error.message ,['warning'])
+            this.snackbarService.showMessage(error.message, ['warning'])
         });
     }
 
-    editeProduct(productId: string, data: IProduct) {
+    editeProduct(productId: string, data: Product) {
         this.cloudStore.collection('products')
             .doc(productId).update(data)
             .then(() => {
-                this.snackbarService.showMessage('Product edited',['success'])
+                this.snackbarService.showMessage('Product edited', ['success'])
             }).catch((error) => {
-                this.snackbarService.showMessage(error.message,['warning'])
-            });
+            this.snackbarService.showMessage(error.message, ['warning'])
+        });
     }
+
     deleteProduct(productId: string) {
         this.cloudStore.collection(this.productsPath).doc(productId).delete()
             .then(() => {
-                this.snackbarService.showMessage('Product delete',['success'])
+                this.snackbarService.showMessage('Product delete', ['success'])
             })
             .catch((error) => {
-                this.snackbarService.showMessage(error.message,['warning'])
+                this.snackbarService.showMessage(error.message, ['warning'])
             });
     }
 

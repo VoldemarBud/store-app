@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {LoginWithEmail} from "../models/loginWithEmail";
-import {BehaviorSubject, map, Observable, take} from "rxjs";
+import {BehaviorSubject, filter, map, Observable, take} from "rxjs";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
-import {IUser} from "../models/user";
+import {User} from "../models/user";
 import {SnackbarService} from "./snackbar.service";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {UserMetaDate} from "../models/userMetaDate";
@@ -14,7 +14,7 @@ export class AuthService {
     private readonly usersPath: string = 'users';
 
     private _isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(false);
-    private _userRole: BehaviorSubject<IUser> = new BehaviorSubject({});
+    private _userRole: BehaviorSubject<User> = new BehaviorSubject({});
 
     constructor(
         private cloudStore: AngularFirestore,
@@ -27,7 +27,7 @@ export class AuthService {
         return this._userRole.value?.role === 'admin';
     }
 
-    isLoggedIn():BehaviorSubject<boolean> {
+    isLoggedIn(): BehaviorSubject<boolean> {
         return this._isLoggedIn;
     }
 
@@ -44,19 +44,19 @@ export class AuthService {
             })
     }
 
-    getUserId():Observable<string|undefined> {
+    getUserId(): Observable<string> {
         return this.fireAuth.user.pipe(
-            map(data => data?.uid)
-        )
+            filter(data => !!data?.uid),
+            map(data => data!.uid)
+        );
     }
-
 
     registration({email, password}: LoginWithEmail) {
         this.fireAuth.createUserWithEmailAndPassword(email, password)
             .then((data) => {
                 this.setUserConfig(data.user!.uid, email, data.user!.metadata);
                 return data.user!.uid
-            }).then(data => {
+            }).then((data: string) => {
             this.getRole(data);
             this._isLoggedIn.next(true);
             this.snackbarService.showMessage('Success', ['success'])
@@ -66,7 +66,7 @@ export class AuthService {
             })
     }
 
-    forgotPass(email: string):Promise<void> {
+    forgotPass(email: string): Promise<void> {
         //need add fix
         return this.fireAuth.sendPasswordResetEmail(email)
             .then((data) => {
@@ -90,7 +90,7 @@ export class AuthService {
         this.cloudStore.collection(this.usersPath).doc(uid).valueChanges()
             .pipe(take(1))
             .toPromise().then(user => {
-            this._userRole.next(<IUser>user)
+            this._userRole.next(<User>user)
         })
     }
 

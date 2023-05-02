@@ -1,11 +1,11 @@
-import {IProductConfigure} from './product-configure';
-import {IProductImage} from './product-image';
+import {ProductConfigure} from './product-configure';
+import {ProductImage} from './product-image';
 
-export interface IProduct{
+export interface Product{
   id: string,
   title: string,
   price: number,
-  image: IProductImage,
+  image: ProductImage,
   description: string
-  configure: IProductConfigure
+  configure: ProductConfigure
 }

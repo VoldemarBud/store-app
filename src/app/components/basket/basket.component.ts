@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {distinctUntilChanged, map, Observable, Subject, takeUntil} from 'rxjs';
-import {IProduct} from '../../models/product/product';
+import {Product} from '../../models/product/product';
 import {BasketService} from "../../services/basket.service";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component";
 
 @Component({
     selector: 'app-basket',
@@ -9,12 +11,13 @@ import {BasketService} from "../../services/basket.service";
     styleUrls: ['./basket.component.scss']
 })
 export class BasketComponent implements OnInit {
-    badgeProducts$!: Observable<IProduct[]>;
+    badgeProducts$!: Observable<Product[]>;
     totalPrice$!: Observable<number>;
     unSub = new Subject();
     canBuy$!: Observable<boolean>
 
     constructor(
+        private dialogConfirm: MatDialog,
         private basketService: BasketService
     ) {
     }
@@ -38,6 +41,16 @@ export class BasketComponent implements OnInit {
                 this.unSub.next(true);
                 this.unSub.complete();
             });
+
+        this.dialogConfirm.open(ConfirmDialogComponent).afterClosed().subscribe(confirm => {
+            if (confirm) {
+                this.basketService.completeOrder().pipe(takeUntil(this.unSub))
+                    .subscribe(() => {
+                        this.unSub.next(true);
+                        this.unSub.complete();
+                    });
+            }
+        })
     }
 
     deleteFromBasket(id: string) {

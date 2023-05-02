@@ -10,7 +10,7 @@ import {BasketService} from "../../services/basket.service";
     styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-    badge!: Observable<any>;
+    badge!: Observable<string[]|[]>;
     canView$!: Observable<boolean>;
     private unsub = new Subject();
 
@@ -23,12 +23,13 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void {
         this.canView$ = this.authService.isLoggedIn();
-        this.badge = this.basketService.getProductInBasket$.pipe(filter(data => !!data));
+        this.badge = this.basketService.getProductInBasket$
     }
 
     onLogout() {
         this.authService.logout()
-        this.authService.isLoggedIn().pipe(filter(data => !data)).subscribe(() => {
+        this.authService.isLoggedIn().pipe(
+            filter(data => !data)).subscribe(() => {
             this.router.navigate(['home'])
             this.unsub.next(true);
             this.unsub.complete();
