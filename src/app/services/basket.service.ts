@@ -2,11 +2,9 @@ import {Injectable} from '@angular/core';
 import {filter, first, map, Observable, of, shareReplay, switchMap} from "rxjs";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {SnackbarService} from "./snackbar.service";
-import {Product} from "../models/product/product";
+import {IProduct} from "../models/product/product";
 import {ProductService} from "./product.service";
 import {AuthService} from "./auth.service";
-import {OrderHistory} from "../models/orderHistory";
-import {User} from "../models/user";
 
 @Injectable({
     providedIn: 'root'
@@ -14,8 +12,8 @@ import {User} from "../models/user";
 export class BasketService {
     private readonly usersPath: string = 'users';
 
-    getProductInBasket$: Observable<string[] | []> = this.getProductInBasket()
-    basketProducts$:Observable<Product[]> = this.basketProducts()
+    getProductInBasket$: Observable<any> = this.getProductInBasket()
+    basketProducts$: Observable<any> = this.basketProducts()
 
     constructor(
         private cloudStore: AngularFirestore,
@@ -26,8 +24,10 @@ export class BasketService {
     }
 
 
-    getProductInBasket():Observable<string[]|[]> {
+    getProductInBasket():Observable<[]|undefined> {
         return this.authService.getUserId().pipe(
+            shareReplay(1),
+            filter(id => !!id),
             switchMap(id => {
                 return this.cloudStore.collection(this.usersPath).doc(id).valueChanges().pipe(
                     map((user: any) => user.basket),
@@ -37,16 +37,17 @@ export class BasketService {
 
     }
 
-    deleteFromBasket(productId: string): Observable<void> {
+    deleteFromBasket(productId: string):Observable<void> {
         return this.authService.getUserId().pipe(
             shareReplay(1),
+            filter(id => !!id),
             switchMap(id => {
                 const activeOrder = this.cloudStore.collection(this.usersPath).doc(id)
                 return activeOrder
                     .valueChanges().pipe(
                         filter((data) => !!data),
                         first(),
-                        switchMap((oldData:any) => {
+                        switchMap((oldData: any) => {
                             this.snackbarService.showMessage('Product delete from basket', ['success'])
                             return activeOrder.update({
                                 basket: oldData.basket.filter((product: string) => product !== productId)
@@ -58,16 +59,17 @@ export class BasketService {
     }
 
 
-    totalPrice():Observable<number> {
+    totalPrice<T>():Observable<T> {
         return this.basketProducts$.pipe(
-            map((data:Product[]) => data.map((data: Product) => data.price)
+            map(data => data.map((data: IProduct) => data.price)
                 .reduce((sum: number, price: number) => sum + price, 0)),
         )
     }
 
-    addToBasket(productId: string) {
+    addToBasket<T>(productId: string):Observable<T> {
         return this.authService.getUserId().pipe(
             shareReplay(1),
+            filter(id => !!id),
             switchMap(id => {
                 const activeOrder = this.cloudStore.collection(this.usersPath).doc(id)
                 return activeOrder
@@ -89,39 +91,38 @@ export class BasketService {
         );
     }
 
-    orderHistory(): Observable<OrderHistory[] | []> {
+    orderHistory() {
         return this.authService.getUserId().pipe(
             shareReplay(1),
+            filter(id => !!id),
             switchMap(id => {
-                    return this.cloudStore.collection(this.usersPath).doc(id).collection('completeOrders').valueChanges() as Observable<OrderHistory[] | []>
+                    return this.cloudStore.collection(this.usersPath).doc(id).collection('completeOrders').valueChanges()
                 }
             ))
     }
 
-    basketProducts(): Observable<Product[]> {
+    basketProducts():Observable<IProduct[]> {
         return this.getProductInBasket$.pipe(
-            switchMap((basketItems: string[]) => {
+            switchMap((basketItems: any) => {
                 return this.productService.getProducts({})
                     .valueChanges({idField: 'id'})
                     .pipe(
-                        map((products: { id: string }[]) => products
-                            .filter((product: { id: string }) => basketItems.includes(product.id))
+                        map((products:{id:string}[]) => products
+                            .filter((product:{id:string}) => basketItems.includes(product.id))
                         )
                     );
             })
-        ) as Observable<Product[]>
+        ) as Observable<IProduct[]>
     }
 
 
-    completeOrder() {
+    completeOrder():Observable<void> {
         return this.authService.getUserId().pipe(
-            switchMap((id: string) => {
-                const activeOrderRef = this.cloudStore.collection(this.usersPath).doc(id)
-                return activeOrderRef.get().pipe(
-                    filter(data => !!data.data()),
-                    map(data => data.data() as User),
-                    switchMap((activeOrder: User) => {
-                        console.log('activeOrder', activeOrder)
+            filter(id => !!id),
+            switchMap((id) => {
+                const activeOrderRef = this.cloudStore.collection(this.usersPath).doc(id);
+                return activeOrderRef.valueChanges().pipe(
+                    switchMap((activeOrder: any) => {
                         return this.totalPrice().pipe(
                             map(totalPrice => {
                                 this.cloudStore.collection('users').doc(id).collection('completeOrders').add({
@@ -132,8 +133,6 @@ export class BasketService {
                                     this.snackbarService.showMessage('Order Created', ['success'])
                                     activeOrderRef.update({
                                         basket: []
-                                    }).catch(({message}) => {
-                                        this.snackbarService.showMessage(`${message.substring(message.indexOf(':') + 2, message.lastIndexOf('(') - 1)} `, ['warning']);
                                     })
                                 }).catch(({message}) => {
                                     this.snackbarService.showMessage(`${message.substring(message.indexOf(':') + 2, message.lastIndexOf('(') - 1)} `, ['warning']);

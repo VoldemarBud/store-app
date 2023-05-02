@@ -1,3 +1,3 @@
-export interface ProductConfigure{
+export interface IProductConfigure{
   year: string
 }

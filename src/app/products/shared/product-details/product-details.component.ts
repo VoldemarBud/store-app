@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Data, Router} from '@angular/router';
 import {firstValueFrom, map, Observable, Subject, takeUntil} from 'rxjs';
-import {Product} from '../../../models/product/product';
+import {IProduct} from '../../../models/product/product';
 import {AuthService} from "../../../services/auth.service";
 import {ProductService} from "../../../services/product.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -14,7 +14,7 @@ import {BasketService} from "../../../services/basket.service";
     styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent implements OnInit {
-    product$!: Observable<Product>;
+    product$!: Observable<IProduct>;
     canView$!: Observable<boolean>;
     canDelete!: boolean;
     unsub = new Subject();
@@ -48,7 +48,7 @@ export class ProductDetailsComponent implements OnInit {
     }
 
     confirmDelete() {
-        this.dialogConfirm.open(ConfirmDialogComponent).afterClosed().subscribe(data => {
+        this.dialogConfirm.open(ConfirmDialogComponent).afterClosed().pipe(takeUntil(this.unsub)).subscribe(data => {
             this.deleteProduct(data)
         })
     }

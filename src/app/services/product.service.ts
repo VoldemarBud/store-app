@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {AngularFireStorage} from '@angular/fire/compat/storage';
 import {Observable} from 'rxjs';
-import {Product} from '../models/product/product';
+import {IProduct} from '../models/product/product';
 import {QueryFn} from "../models/queryFn";
 import {SnackbarService} from "./snackbar.service";
 import {UploadTaskSnapshot} from "@angular/fire/compat/storage/interfaces";
@@ -29,7 +29,7 @@ export class ProductService {
             (ref) => ref.orderBy(fieldPath, directionStr))
     }
 
-    deleteLastFile(imageFile: File | Product | undefined, fileName: string): void {
+    deleteLastFile(imageFile: File | IProduct | undefined, fileName: string): void {
         if (imageFile) {
             this.storage.ref(this.productsPath).child(fileName).delete();
         }
@@ -46,7 +46,7 @@ export class ProductService {
 
 
 
-    addProduct(data: Product) {
+    addProduct(data: IProduct) {
         this.cloudStore.collection('products')
             .add(data)
             .then(() => {
@@ -56,7 +56,7 @@ export class ProductService {
         });
     }
 
-    editeProduct(productId: string, data: Product) {
+    editeProduct(productId: string, data: IProduct) {
         this.cloudStore.collection('products')
             .doc(productId).update(data)
             .then(() => {

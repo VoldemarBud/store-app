@@ -10,7 +10,7 @@ import {BasketService} from "../../services/basket.service";
     styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-    badge!:  Observable<string[]|[]>;
+    badge!: Observable<any>;
     canView$!: Observable<boolean>;
     private unsub = new Subject();
 
@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void {
         this.canView$ = this.authService.isLoggedIn();
-        this.badge = this.basketService.getProductInBasket$
+        this.badge = this.basketService.getProductInBasket$.pipe(filter(data => !!data));
     }
 
     onLogout() {

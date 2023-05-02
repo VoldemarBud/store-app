@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Product} from '../../../models/product/product';
+import {IProduct} from '../../../models/product/product';
 import {map, Observable, Subject, takeUntil} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {ProductFormComponent} from '../product-form/product-form.component';
@@ -17,7 +17,7 @@ import {BasketService} from "../../../services/basket.service";
 export class ProductsComponent implements OnInit {
     canView$!: Observable<boolean>;
     canEdite!: boolean;
-    products$?: Observable<Product[]>;
+    products$?: Observable<IProduct[]>;
     unsub = new Subject();
 
     constructor(private productService: ProductService,
@@ -28,7 +28,7 @@ export class ProductsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.products$ = this.productService.getProducts({}).valueChanges({idField: 'id'}) as Observable<Product[]>;
+        this.products$ = this.productService.getProducts({}).valueChanges({idField: 'id'}) as Observable<IProduct[]>;
         this.canView$ = this.route.data.pipe(
             map((data: Data) => data?.['data'])
         )
@@ -36,7 +36,7 @@ export class ProductsComponent implements OnInit {
     }
 
     getSorted(data: QueryFn) {
-        this.products$ = this.productService.getProducts(data).valueChanges({idField: 'id'}) as Observable<Product[]>;
+        this.products$ = this.productService.getProducts(data).valueChanges({idField: 'id'}) as Observable<IProduct[]>;
     }
 
     addToBasket(id: string): void {
@@ -49,7 +49,7 @@ export class ProductsComponent implements OnInit {
             )
     }
 
-    openDialog(product?: Product): void {
+    openDialog(product?: IProduct): void {
         this.dialog.open(ProductFormComponent, {
             data: {
                 title: product ? 'Edite Product' : 'Add new Product',

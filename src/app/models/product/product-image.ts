@@ -1,4 +1,4 @@
-export interface ProductImage {
+export interface IProductImage {
   imgName: string,
   imgUrl: string
 }

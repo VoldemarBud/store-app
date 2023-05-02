@@ -8,11 +8,11 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class SnackbarService {
 
   constructor(
-      private snackBar: MatSnackBar
+      private _snackBar: MatSnackBar
   ) { }
 
   showMessage(message: string,cssClass: string[]) {
-    this.snackBar.openFromComponent(
+    this._snackBar.openFromComponent(
         MessageSnackbarComponent,
         {
           data: message,
