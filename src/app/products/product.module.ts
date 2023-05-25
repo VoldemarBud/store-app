@@ -15,6 +15,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {TruncatePipe} from "../pipes/truncate.pipe";
 import {RouterLink} from "@angular/router";
 import {MatChipsModule} from "@angular/material/chips";
+import {ProductRoutingModule} from "./product-routing.module";
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import {MatChipsModule} from "@angular/material/chips";
         MatCardModule,
         MatChipsModule,
         RouterLink,
+        ProductRoutingModule
     ],
     exports: [ProductsComponent]
 })

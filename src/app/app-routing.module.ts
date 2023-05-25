@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {BaseComponent} from './components/base/base.component';
 import {ProductsComponent} from './products/shared/products/products.component';
 import {ProductDetailsComponent} from './products/shared/product-details/product-details.component';
 import {BasketComponent} from './components/basket/basket.component';
@@ -18,14 +17,10 @@ const routes: Routes = [
     {path: 'sign-in', component: SignInComponent, canActivate: [LoginGuard]},
     {path: 'register-user', component: SignUpComponent, canActivate: [LoginGuard]},
     {path: 'forgot-password', component: ForgotPassComponent, canActivate: [LoginGuard]},
-    {path: 'home', component: BaseComponent},
     {
-        path: 'products', component: ProductsComponent, resolve: {data: AuthResolver}
-    },
-    {
-        path: 'products/:id',
-        component: ProductDetailsComponent,
-        resolve: {data: ProductResolver},
+        path: 'home',
+        loadChildren: () => import('./products/product.module').then(m => m.ProductModule),
+        resolve: {data: AuthResolver}
     },
     {
         path: 'basket', component: BasketComponent, canActivate: [AuthGuard]
@@ -35,7 +30,7 @@ const routes: Routes = [
     },
     {
         path: "**",
-        redirectTo: '', component: BaseComponent, pathMatch: 'full'
+        redirectTo: '', component: ProductsComponent, pathMatch: 'full'
     }
 ];
 

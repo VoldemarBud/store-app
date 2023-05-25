@@ -7,7 +7,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HeaderComponent} from './components/header/header.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {BasketComponent} from './components/basket/basket.component';
-import {BaseComponent} from './components/base/base.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -36,7 +35,6 @@ import {MatExpansionModule} from "@angular/material/expansion";
         HeaderComponent,
         FooterComponent,
         BasketComponent,
-        BaseComponent,
         SignInComponent,
         SignUpComponent,
         ForgotPassComponent,

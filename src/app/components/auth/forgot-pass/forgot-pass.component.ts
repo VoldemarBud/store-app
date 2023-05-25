@@ -21,10 +21,6 @@ export class ForgotPassComponent {
     ) {
     }
 
-    toggleShowPass(): void {
-        this.showPass = !this.showPass;
-    }
-
     onRegistration(): void {
         if (this.singUpFrom.valid) {
           this.authService.forgotPass(this.singUpFrom.value);
