@@ -3,64 +3,55 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HeaderComponent} from './components/header/header.component';
 import {FooterComponent} from './components/footer/footer.component';
-import {BasketComponent} from './components/basket/basket.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import {HttpClientModule} from '@angular/common/http';
 import {environment} from '../environments/environment';
 import {AngularFireModule} from '@angular/fire/compat';
 import {AngularFireStorageModule} from '@angular/fire/compat/storage';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {ReactiveFormsModule} from '@angular/forms';
 import {MatBadgeModule} from '@angular/material/badge';
 import {SignInComponent} from './components/auth/sign-in/sign-in.component';
 import {ProductModule} from "./products/product.module";
 import {MatInputModule} from "@angular/material/input";
 import {SignUpComponent} from "./components/auth/sign-up/sign-up.component";
 import {ForgotPassComponent} from "./components/auth/forgot-pass/forgot-pass.component";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {MessageSnackbarComponent} from './components/snackbars/message-snackbar/message-snackbar.component';
-import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import { OrderHistoryComponent } from './components/order-history/order-history.component';
-import {MatExpansionModule} from "@angular/material/expansion";
+import {BasketModule} from "./basket/basket.module";
+import {OrderHistoryModule} from "./order-history/order-history.module";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
     declarations: [
         AppComponent,
         HeaderComponent,
         FooterComponent,
-        BasketComponent,
         SignInComponent,
         SignUpComponent,
         ForgotPassComponent,
-        MessageSnackbarComponent,
         ConfirmDialogComponent,
-        OrderHistoryComponent,
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
-        HttpClientModule,
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFireStorageModule,
         ProductModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
+        BasketModule,
+        OrderHistoryModule,
         MatIconModule,
         MatToolbarModule,
-        MatDialogModule,
-        MatBadgeModule,
         MatButtonModule,
-        MatInputModule,
         MatSnackBarModule,
-        FormsModule,
-        MatExpansionModule,
+        MatBadgeModule,
+        MatInputModule,
+        MatDialogModule,
+        ReactiveFormsModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

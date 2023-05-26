@@ -1,16 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ProductsComponent} from './products/shared/products/products.component';
-import {ProductDetailsComponent} from './products/shared/product-details/product-details.component';
-import {BasketComponent} from './components/basket/basket.component';
-import {ProductResolver} from './resolvers/product.resolver';
 import {SignInComponent} from './components/auth/sign-in/sign-in.component';
 import {AuthGuard} from './guards/auth.guard';
 import {LoginGuard} from "./guards/login.guard";
 import {AuthResolver} from "./resolvers/auth.resolver";
 import {SignUpComponent} from "./components/auth/sign-up/sign-up.component";
 import {ForgotPassComponent} from "./components/auth/forgot-pass/forgot-pass.component";
-import {OrderHistoryComponent} from "./components/order-history/order-history.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/sign-in', pathMatch: 'full'},
@@ -20,13 +16,18 @@ const routes: Routes = [
     {
         path: 'home',
         loadChildren: () => import('./products/product.module').then(m => m.ProductModule),
-        resolve: {data: AuthResolver}
+        resolve: {data: AuthResolver},
+        canActivate: [AuthGuard]
     },
     {
-        path: 'basket', component: BasketComponent, canActivate: [AuthGuard]
+        path: 'basket',
+        loadChildren: () => import('./basket/basket.module').then(m => m.BasketModule),
+        canActivate: [AuthGuard]
     },
     {
-        path:'order-history', component: OrderHistoryComponent, canActivate: [AuthGuard]
+        path: 'order-history',
+        loadChildren: () => import('./order-history/order-history.module').then(m => m.OrderHistoryModule),
+        canActivate: [AuthGuard]
     },
     {
         path: "**",

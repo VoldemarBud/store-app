@@ -3,7 +3,7 @@ import {distinctUntilChanged, map, Observable, Subject, takeUntil} from 'rxjs';
 import {Product} from '../../models/product/product';
 import {BasketService} from "../../services/basket.service";
 import {MatDialog} from "@angular/material/dialog";
-import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component";
+import {ConfirmDialogComponent} from "../../components/confirm-dialog/confirm-dialog.component";
 
 @Component({
     selector: 'app-basket',
