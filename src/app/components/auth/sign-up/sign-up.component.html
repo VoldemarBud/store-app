@@ -1,6 +1,6 @@
 <div style="height: 84vh;" class="d-flex items-center flex-direction-column justify-center">
     <div class="auth-block mb-10">
-        <h3 class="text-center page-title">Sing In</h3>
+        <h3 class="text-center page-title">Sing Up</h3>
         <form class="my-10 d-flex flex-direction-column" [formGroup]="singUpFrom" (ngSubmit)="onRegistration()">
             <mat-form-field appearance="fill">
                 <mat-label>Email</mat-label>
@@ -18,7 +18,6 @@
         </form>
     </div>
     <div>
-        <span class="auth-link" routerLink="/forgot-password"> Forgot password?</span>
+       <span class="auth-link" routerLink="/sing-in"> Sign In</span>
     </div>
-
 </div>

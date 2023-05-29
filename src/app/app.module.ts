@@ -17,13 +17,13 @@ import {SignInComponent} from './components/auth/sign-in/sign-in.component';
 import {ProductModule} from "./products/product.module";
 import {MatInputModule} from "@angular/material/input";
 import {SignUpComponent} from "./components/auth/sign-up/sign-up.component";
-import {ForgotPassComponent} from "./components/auth/forgot-pass/forgot-pass.component";
 import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {BasketModule} from "./basket/basket.module";
 import {OrderHistoryModule} from "./order-history/order-history.module";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {NotFoundComponent} from './components/not-found/not-found.component';
 
 @NgModule({
     declarations: [
@@ -32,8 +32,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
         FooterComponent,
         SignInComponent,
         SignUpComponent,
-        ForgotPassComponent,
         ConfirmDialogComponent,
+        NotFoundComponent,
     ],
     imports: [
         BrowserModule,

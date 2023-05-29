@@ -36,7 +36,7 @@ export class SignInComponent {
            this.authService.isLoggedIn().pipe(filter(data=>data)).subscribe(()=>{
                this.unsub.next(true);
                this.unsub.complete();
-               this.router.navigate(['home'])
+               this.router.navigate(['products'])
            })
         }
     }

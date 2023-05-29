@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {LoginWithEmail} from "../models/loginWithEmail";
-import {BehaviorSubject, filter, map, Observable, take} from "rxjs";
+import {BehaviorSubject, filter, map, Observable, of, take} from "rxjs";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {User} from "../models/user";
 import {SnackbarService} from "./snackbar.service";
@@ -14,7 +14,7 @@ export class AuthService {
     private readonly usersPath: string = 'users';
 
     private _isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(false);
-    private _userRole: BehaviorSubject<User> = new BehaviorSubject({});
+    userAdmin: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     constructor(
         private cloudStore: AngularFirestore,
@@ -23,75 +23,18 @@ export class AuthService {
     ) {
     }
 
-    isAdmin(): boolean {
-        return this._userRole.value?.role === 'admin';
+    private setUser(uid: string) {
+        return this.cloudStore.collection(this.usersPath).doc(uid).valueChanges()
+            .pipe(
+                filter(data => !!data),
+                take(1)
+            ).toPromise().then((user) => {
+                this.isAdmin((user as User)?.role);
+            });
     }
 
-    isLoggedIn(): BehaviorSubject<boolean> {
-        return this._isLoggedIn;
-    }
-
-    login({email, password}: LoginWithEmail) {
-        this.fireAuth.signInWithEmailAndPassword(email, password)
-            .then(({user}) => {
-                this.getRole(user!.uid)
-                this.updateUserDate(user!.uid, user!.metadata)
-                this._isLoggedIn.next(true);
-                this.snackbarService.showMessage('Success', ['success'])
-            })
-            .catch(({message}) => {
-                this.snackbarService.showMessage(message, ['warning']);
-            })
-    }
-
-    getUserId(): Observable<string> {
-        return this.fireAuth.user.pipe(
-            filter(data => !!data?.uid),
-            map(data => data!.uid)
-        );
-    }
-
-    registration({email, password}: LoginWithEmail) {
-        this.fireAuth.createUserWithEmailAndPassword(email, password)
-            .then((data) => {
-                this.setUserConfig(data.user!.uid, email, data.user!.metadata);
-                return data.user!.uid
-            }).then((data: string) => {
-            this.getRole(data);
-            this._isLoggedIn.next(true);
-            this.snackbarService.showMessage('Success', ['success'])
-        })
-            .catch(({message}) => {
-                this.snackbarService.showMessage(message, ['warning']);
-            })
-    }
-
-    forgotPass(email: string): Promise<void> {
-        //need add fix
-        return this.fireAuth.sendPasswordResetEmail(email)
-            .then((data) => {
-                console.log(data);
-                // this.router.navigate(['sing-in'])
-                // have error value(email) from firebase
-            }).catch(({message}) => {
-                this.snackbarService.showMessage(message, ['warning'])
-            })
-    }
-
-    logout() {
-        this.fireAuth.signOut().then(() => {
-            this._isLoggedIn.next(false);
-        }).catch(err => {
-            this.snackbarService.showMessage(err, ['warning']);
-        })
-    }
-
-    private getRole(uid: string) {
-        this.cloudStore.collection(this.usersPath).doc(uid).valueChanges()
-            .pipe(take(1))
-            .toPromise().then(user => {
-            this._userRole.next(<User>user)
-        })
+    private isAdmin(role?: string) {
+        this.userAdmin.next(role === 'admin')
     }
 
     private updateUserDate(id: string, metaDate: UserMetaDate) {
@@ -114,4 +57,63 @@ export class AuthService {
             }
         )
     }
+
+
+    isLoggedIn(): BehaviorSubject<boolean> {
+        return this._isLoggedIn;
+    }
+
+    async login({email, password}: LoginWithEmail) {
+        const {uid, metadata}: ({
+            uid?: string,
+            metadata?: UserMetaDate
+        } | any) = await this.fireAuth.signInWithEmailAndPassword(email, password)
+            .then(({user}) => {
+                return {uid: user!.uid, metadata: user!.metadata};
+            })
+            .catch(({message}) => {
+                this.snackbarService.showMessage(message, ['warning']);
+            })
+        if (uid) {
+            await this.setUser(uid);
+            await this.updateUserDate(uid, metadata)
+            this._isLoggedIn.next(true);
+            this.snackbarService.showMessage('Success', ['success'])
+        }
+
+    }
+
+    getUserId(): Observable<string> {
+        return this.fireAuth.user.pipe(
+            filter(data => !!data?.uid),
+            map(data => data!.uid)
+        );
+    }
+
+    async registration({email, password}: LoginWithEmail) {
+        const uid = await this.fireAuth.createUserWithEmailAndPassword(email, password)
+            .then((data) => {
+                this.setUserConfig(data.user!.uid, email, data.user!.metadata);
+                return data.user!.uid
+            }).catch(({message}) => {
+                this.snackbarService.showMessage(message, ['warning']);
+            })
+        if (uid) {
+            await this.setUser(uid);
+            this._isLoggedIn.next(true);
+            this.snackbarService.showMessage('Success', ['success'])
+        }
+    }
+
+    logout() {
+        this.fireAuth.signOut()
+            .then(() => {
+                this.userAdmin.next(false);
+                this._isLoggedIn.next(false);
+            })
+            .catch(err => {
+                this.snackbarService.showMessage(err, ['warning']);
+            })
+    }
+
 }

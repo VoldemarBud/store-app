@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {filter, Observable, Subject} from 'rxjs';
+import {Observable} from 'rxjs';
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
 import {BasketService} from "../../services/basket.service";
@@ -10,9 +10,8 @@ import {BasketService} from "../../services/basket.service";
     styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-    badge!: Observable<string[]|[]>;
+    badge!: Observable<string[] | []>;
     canView$!: Observable<boolean>;
-    private unsub = new Subject();
 
     constructor(
         private basketService: BasketService,
@@ -28,11 +27,6 @@ export class HeaderComponent implements OnInit {
 
     onLogout() {
         this.authService.logout()
-        this.authService.isLoggedIn().pipe(
-            filter(data => !data)).subscribe(() => {
-            this.router.navigate(['home'])
-            this.unsub.next(true);
-            this.unsub.complete();
-        })
+        this.router.navigate(['/products'])
     }
 }

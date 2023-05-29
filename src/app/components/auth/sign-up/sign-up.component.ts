@@ -33,7 +33,7 @@ export class SignUpComponent {
         if (this.singUpFrom.valid) {
               this.authService.registration(this.singUpFrom.value)
             this.authService.isLoggedIn().pipe(filter(data=>data)).subscribe(()=>{
-                this.router.navigate(['home'])
+                this.router.navigate(['products'])
                 this.unsub.next(true);
                 this.unsub.complete();
             })

@@ -1,5 +1,5 @@
 <mat-toolbar class="border-b-1 bg-purple justify-space-between flex-wrap no-select">
-  <button routerLink="/home" mat-button class="cursor-pointer logo  ">
+  <button routerLink="/products" mat-button class="cursor-pointer logo  ">
     <mat-icon>home</mat-icon>
     <span>My Shop</span>
   </button>
@@ -23,7 +23,7 @@
         </mat-icon>
       </button>
     </ng-container>
-    <button routerLink="/sign-in" *ngIf="!(canView$|async);else logout" mat-icon-button>
+    <button routerLink="/sing-in" *ngIf="!(canView$|async);else logout" mat-icon-button>
       <mat-icon>key</mat-icon>
     </button>
     <ng-template #logout>
