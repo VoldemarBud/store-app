@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {LoginWithEmail} from "../models/loginWithEmail";
-import {BehaviorSubject, filter, map, Observable, of, take} from "rxjs";
+import {BehaviorSubject, filter, map, Observable, take} from "rxjs";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {User} from "../models/user";
 import {SnackbarService} from "./snackbar.service";
