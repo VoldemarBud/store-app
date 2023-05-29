@@ -36,13 +36,8 @@ export class BasketComponent implements OnInit {
     }
 
     createOrder() {
-        this.basketService.completeOrder().pipe(takeUntil(this.unSub))
-            .subscribe(() => {
-                this.unSub.next(true);
-                this.unSub.complete();
-            });
-
-        this.dialogConfirm.open(ConfirmDialogComponent).afterClosed().subscribe(confirm => {
+        this.dialogConfirm.open(ConfirmDialogComponent).afterClosed()
+            .pipe(takeUntil(this.unSub)).subscribe(confirm => {
             if (confirm) {
                 this.basketService.completeOrder().pipe(takeUntil(this.unSub))
                     .subscribe(() => {

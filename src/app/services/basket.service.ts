@@ -122,7 +122,6 @@ export class BasketService {
                     filter(data => !!data.data()),
                     map(data => data.data() as User),
                     switchMap((activeOrder: User) => {
-                        console.log('activeOrder', activeOrder)
                         return this.totalPrice().pipe(
                             map(totalPrice => {
                                 this.cloudStore.collection('users').doc(id).collection('completeOrders').add({
