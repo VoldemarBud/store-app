@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {map, Observable, Subject, takeUntil} from "rxjs";
-import {Product} from "../../../models/product/product";
-import {ProductService} from "../../../services/product.service";
-import {BasketService} from "../../../services/basket.service";
-import {AuthService} from "../../../services/auth.service";
+import {Product} from "../../../shared/models/product/product";
+import {ProductService} from "../../../shared/services/product.service";
+import {BasketService} from "../../../shared/services/basket.service";
+import {AuthService} from "../../../shared/services/auth.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute, Data} from "@angular/router";
-import {QueryFn} from "../../../models/queryFn";
+import {QueryFn} from "../../../shared/models/queryFn";
 import {ProductFormComponent} from "../product-form/product-form.component";
 
 @Component({

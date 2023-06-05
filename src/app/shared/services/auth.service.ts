@@ -78,7 +78,7 @@ export class AuthService {
             await this.setUser(uid);
             await this.updateUserDate(uid, metadata)
             this._isLoggedIn.next(true);
-            this.snackbarService.showMessage('Success', ['success'])
+            this.snackbarService.showMessage('Success Login', ['success'])
         }
 
     }
@@ -101,7 +101,7 @@ export class AuthService {
         if (uid) {
             await this.setUser(uid);
             this._isLoggedIn.next(true);
-            this.snackbarService.showMessage('Success', ['success'])
+            this.snackbarService.showMessage('Success Registration', ['success'])
         }
     }
 

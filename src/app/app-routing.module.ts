@@ -1,13 +1,13 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {SignInComponent} from './components/auth/sign-in/sign-in.component';
-import {AuthGuard} from './guards/auth.guard';
-import {LoginGuard} from "./guards/login.guard";
-import {SignUpComponent} from "./components/auth/sign-up/sign-up.component";
-import {NotFoundComponent} from "./components/not-found/not-found.component";
+import {SignInComponent} from './shared/components/auth/sign-in/sign-in.component';
+import {AuthGuard} from './shared/guards/auth.guard';
+import {LoginGuard} from "./shared/guards/login.guard";
+import {SignUpComponent} from "./shared/components/auth/sign-up/sign-up.component";
+import {NotFoundComponent} from "./shared/components/not-found/not-found.component";
 
 const routes: Routes = [
-    {path: '', redirectTo: '/products', pathMatch: 'full'},
+    {path: '', redirectTo: '/products/all', pathMatch: 'full'},
     {path: 'sing-in', component: SignInComponent, canActivate: [LoginGuard]},
     {path: 'register-user', component: SignUpComponent, canActivate: [LoginGuard]},
     {
@@ -26,8 +26,7 @@ const routes: Routes = [
     },
     {
         path: "**",
-        pathMatch: 'full',
-        redirectTo: '',
+        redirectTo: '404',
         component: NotFoundComponent
     }
 ];

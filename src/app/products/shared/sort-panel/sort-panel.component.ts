@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {QueryFn} from "../../../models/queryFn";
+import {QueryFn} from "../../../shared/models/queryFn";
 
 @Component({
   selector: 'app-sort-panel',

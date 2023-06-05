@@ -29,6 +29,11 @@ export class ProductService {
             (ref) => ref.orderBy(fieldPath, directionStr))
     }
 
+    getProduct(id:string) {
+        return this.cloudStore.collection('products').doc(id)
+            .valueChanges({idField: 'id'}) as Observable<Product>
+    }
+
     deleteLastFile(imageFile: File | Product | undefined, fileName: string): void {
         if (imageFile) {
             this.storage.ref(this.productsPath).child(fileName).delete();

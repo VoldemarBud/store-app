@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {filter, first, map, Observable, of, shareReplay, switchMap} from "rxjs";
+import {filter, first, last, map, Observable, of, shareReplay, switchMap, take} from "rxjs";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {SnackbarService} from "./snackbar.service";
 import {Product} from "../models/product/product";
@@ -89,15 +89,24 @@ export class BasketService {
         );
     }
 
-    orderHistory(): Observable<OrderHistory[] | []> {
+    orderHistory(): Observable<OrderHistory[]> {
         return this.authService.getUserId().pipe(
+            take(1),
             shareReplay(1),
+            filter(data => !!data),
             switchMap((id: string) => {
-                    return this.cloudStore.collection(this.usersPath).doc(id).collection('completeOrders')
-                        .valueChanges() as Observable<OrderHistory[] | []>
+                    return this.cloudStore.collection(this.usersPath).doc(id)
+                        .collection('completeOrders', ref =>
+                            ref.limit(10)
+                        )
+                        .valueChanges()
+                        .pipe(
+                            filter(data => !!data)
+                        ) as Observable<OrderHistory[]>
                 }
             ))
     }
+
 
     basketProducts(): Observable<Product[]> {
         return this.getProductInBasket$.pipe(
@@ -124,7 +133,8 @@ export class BasketService {
                     switchMap((activeOrder: User) => {
                         return this.totalPrice().pipe(
                             map(totalPrice => {
-                                this.cloudStore.collection('users').doc(id).collection('completeOrders').add({
+                                this.cloudStore.collection('users')
+                                    .doc(id).collection('completeOrders').add({
                                     dataOrder: new Date().getTime(),
                                     products: activeOrder.basket,
                                     totalPrice

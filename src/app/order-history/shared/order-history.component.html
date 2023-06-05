@@ -1,23 +1,25 @@
 <ng-container *ngIf="(orderHistory$|async)?.length;else emptyTitle">
     <h3 class="text-center page-title">Order History</h3>
-    <mat-accordion >
-        <mat-expansion-panel *ngFor="let order of orderHistory$|async;let idx  = index">
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let order of orderHistory$|async;">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    Order: {{idx + 1}}
+                    <p>Create at: {{order?.dataOrder|date}}</p>
                 </mat-panel-title>
 
             </mat-expansion-panel-header>
-            <p>Create at: {{order['dataOrder']|date}}</p>
             <span>
                    Products:
                 <ul>
-                    <li *ngFor="let product of order['products']">{{product}}</li>
+                    <li *ngFor="let product of order?.products">
+                        {{product}}
+                    </li>
                 </ul>
          </span>
-            <span>Total price: {{order['totalPrice']}}</span>
+            <span>Total price: {{order?.totalPrice}}</span>
         </mat-expansion-panel>
     </mat-accordion>
+
 </ng-container>
 
 <ng-template #emptyTitle>

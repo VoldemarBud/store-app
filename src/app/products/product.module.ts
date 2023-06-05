@@ -12,7 +12,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {TruncatePipe} from "../pipes/truncate.pipe";
+import {TruncatePipe} from "../shared/pipes/truncate.pipe";
 import {RouterLink} from "@angular/router";
 import {MatChipsModule} from "@angular/material/chips";
 import {ProductRoutingModule} from "./product-routing.module";
