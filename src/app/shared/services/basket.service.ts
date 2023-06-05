@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {filter, first, last, map, Observable, of, shareReplay, switchMap, take} from "rxjs";
+import {filter, first, map, Observable, of, shareReplay, switchMap, take} from "rxjs";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {SnackbarService} from "./snackbar.service";
 import {Product} from "../models/product/product";
