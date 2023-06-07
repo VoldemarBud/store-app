@@ -25,6 +25,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NotFoundComponent} from './shared/components/not-found/not-found.component';
 import {MessageSnackbarComponent} from "./shared/components/snackbars/message-snackbar/message-snackbar.component";
+import { LogClickDirective } from './shared/directive/log-click.directive';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import {MessageSnackbarComponent} from "./shared/components/snackbars/message-sn
         SignUpComponent,
         ConfirmDialogComponent,
         NotFoundComponent,
-        MessageSnackbarComponent
+        MessageSnackbarComponent,
+        LogClickDirective
     ],
     imports: [
         BrowserModule,
