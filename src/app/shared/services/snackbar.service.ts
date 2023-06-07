@@ -22,16 +22,4 @@ export class SnackbarService {
             }
         )
     }
-
-    testMethod1(a: number, b: number): number {
-        return a + b
-    }
-
-    async asyncMethod(a: number, b: number): Promise<number> {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve(a + b)
-            },5000)
-        })
-    }
 }

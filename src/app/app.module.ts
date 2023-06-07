@@ -24,6 +24,7 @@ import {OrderHistoryModule} from "./order-history/order-history.module";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NotFoundComponent} from './shared/components/not-found/not-found.component';
+import {MessageSnackbarComponent} from "./shared/components/snackbars/message-snackbar/message-snackbar.component";
 
 @NgModule({
     declarations: [
@@ -34,6 +35,7 @@ import {NotFoundComponent} from './shared/components/not-found/not-found.compone
         SignUpComponent,
         ConfirmDialogComponent,
         NotFoundComponent,
+        MessageSnackbarComponent
     ],
     imports: [
         BrowserModule,
