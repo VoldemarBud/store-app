@@ -1,3 +1,4 @@
 export interface QueryFn{
-    fieldPath?: string, directionStr?: any
+    fieldPath?: string,
+    directionStr?: any
 }
