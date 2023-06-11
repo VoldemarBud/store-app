@@ -10,10 +10,6 @@ const routes: Routes = [
     {path: '', pathMatch: 'full', redirectTo: 'all'},
     {path: 'all', component: ProductsListComponent, resolve: {data: AuthResolver}},
     {
-        path: '',
-        component: ProductsComponent
-    },
-    {
         path: 'products/:id',
         component: ProductDetailsComponent,
         resolve: {data: ProductResolver},
