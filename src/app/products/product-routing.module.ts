@@ -11,11 +11,11 @@ const routes: Routes = [
         path: '',
         component: ProductsComponent
     },
-    {
+            {
         path: 'products/:id',
-        component: ProductDetailsComponent,
-        resolve: {data: ProductResolver},
-    },
+                component: ProductDetailsComponent,
+                resolve: {data: ProductResolver},
+            },
 ];
 
 @NgModule({
