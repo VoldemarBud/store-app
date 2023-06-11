@@ -1,0 +1,24 @@
+<div style="height: 84vh;" class="d-flex items-center flex-direction-column justify-center">
+
+    <div class="auth-block mb-10">
+        <h3 class="text-center page-title">Sing In</h3>
+        <form class="my-10 d-flex flex-direction-column" [formGroup]="singInFrom" (ngSubmit)="onLogin()">
+            <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input type="email" formControlName="email" matNativeControl/>
+                <mat-icon matSuffix>mail</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Password</mat-label>
+                <input [type]="showPass ? 'text' : 'password'" formControlName="password" matNativeControl>
+                <mat-icon (mousedown)="toggleShowPass()" (mouseup)="toggleShowPass()" matSuffix>
+                    {{showPass ? "visibility_off" : "visibility"}}
+                </mat-icon>
+            </mat-form-field>
+            <button class="sing-in-btn" type="submit" mat-button>Login</button>
+        </form>
+    </div>
+    <div>
+        <span>Don't have an account?<span class="auth-link" routerLink="/register-user"> Sign Up</span></span>
+    </div>
+</div>

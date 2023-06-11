@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {distinctUntilChanged, map, Observable, Subject, takeUntil} from 'rxjs';
-import {Product} from '../../models/product/product';
-import {BasketService} from "../../services/basket.service";
+import {Product} from '../../shared/models/product/product';
+import {BasketService} from "../../shared/services/basket.service";
 import {MatDialog} from "@angular/material/dialog";
-import {ConfirmDialogComponent} from "../../components/confirm-dialog/confirm-dialog.component";
+import {ConfirmDialogComponent} from "../../shared/components/confirm-dialog/confirm-dialog.component";
 
 @Component({
     selector: 'app-basket',
@@ -36,13 +36,8 @@ export class BasketComponent implements OnInit {
     }
 
     createOrder() {
-        this.basketService.completeOrder().pipe(takeUntil(this.unSub))
-            .subscribe(() => {
-                this.unSub.next(true);
-                this.unSub.complete();
-            });
-
-        this.dialogConfirm.open(ConfirmDialogComponent).afterClosed().subscribe(confirm => {
+        this.dialogConfirm.open(ConfirmDialogComponent).afterClosed()
+            .pipe(takeUntil(this.unSub)).subscribe(confirm => {
             if (confirm) {
                 this.basketService.completeOrder().pipe(takeUntil(this.unSub))
                     .subscribe(() => {

@@ -6,7 +6,7 @@
         <p>Description: {{(product$|async)?.description}}</p>
         <button class="bg-purple mr-10" *ngIf="(canView$|async)" (click)="addToBasket()" mat-button>Add to basket
         </button>
-        <button *ngIf="canDelete"  (click)="confirmDelete()" mat-raised-button>Delete product</button>
+        <button *ngIf="canDelete$|async"  (click)="confirmDelete()" mat-raised-button>Delete product</button>
     </div>
     <div class="product-img flex-1 ">
         <img width="200px" height="200px" [src]=(product$|async)?.image?.imgUrl [alt]=(product$|async)?.image?.imgName>

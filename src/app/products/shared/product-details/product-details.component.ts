@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Data, Router} from '@angular/router';
 import {firstValueFrom, map, Observable, Subject, takeUntil} from 'rxjs';
-import {Product} from '../../../models/product/product';
-import {AuthService} from "../../../services/auth.service";
-import {ProductService} from "../../../services/product.service";
+import {Product} from '../../../shared/models/product/product';
+import {AuthService} from "../../../shared/services/auth.service";
+import {ProductService} from "../../../shared/services/product.service";
 import {MatDialog} from "@angular/material/dialog";
-import {ConfirmDialogComponent} from "../../../components/confirm-dialog/confirm-dialog.component";
-import {BasketService} from "../../../services/basket.service";
+import {ConfirmDialogComponent} from "../../../shared/components/confirm-dialog/confirm-dialog.component";
+import {BasketService} from "../../../shared/services/basket.service";
 
 @Component({
     selector: 'app-products-details',
@@ -16,7 +16,7 @@ import {BasketService} from "../../../services/basket.service";
 export class ProductDetailsComponent implements OnInit {
     product$!: Observable<Product>;
     canView$!: Observable<boolean>;
-    canDelete!: boolean;
+    canDelete$!: Observable<boolean>;
     unsub = new Subject();
 
     constructor(
@@ -33,7 +33,7 @@ export class ProductDetailsComponent implements OnInit {
             map((data: Data) => data?.['data'])
         )
         this.canView$ = this.authService.isLoggedIn();
-        this.canDelete = this.authService.isAdmin();
+        this.canDelete$ = this.authService.userAdmin;
     }
 
     async addToBasket() {
@@ -59,7 +59,7 @@ export class ProductDetailsComponent implements OnInit {
             this.productService.deleteProduct(product.id);
             this.unsub.next(true);
             this.unsub.complete();
-            this.router.navigate(['home'])
+            this.router.navigate(['products'])
         }
     }
 }

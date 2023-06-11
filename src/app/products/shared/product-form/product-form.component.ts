@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ProductService} from '../../../services/product.service';
+import {ProductService} from '../../../shared/services/product.service';
 import {filter, Subject, switchMap, takeUntil} from 'rxjs';
-import {DialogData} from "../../../models/dialogData";
+import {DialogData} from "../../../shared/models/dialogData";
 
 @Component({
     selector: 'app-product-form',

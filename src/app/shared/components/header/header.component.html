@@ -1,0 +1,35 @@
+<mat-toolbar class="border-b-1 bg-purple justify-space-between flex-wrap no-select">
+  <button routerLink="/products" mat-button class="cursor-pointer logo  ">
+    <mat-icon>home</mat-icon>
+    <span>My Shop</span>
+  </button>
+  <div>
+    <button routerLink="/products" mat-icon-button>
+      <mat-icon>store</mat-icon>
+    </button>
+
+
+    <ng-container  *ngIf="canView$|async">
+      <button
+              routerLink="/basket" mat-icon-button>
+        <mat-icon
+                [matBadge]="(badge|async)?.length!=0?(badge|async)?.length:null"
+                matBadgeColor="warn">shopping_basket
+        </mat-icon>
+      </button>
+      <button mat-icon-button routerLink="/order-history">
+        <mat-icon>
+          assignment
+        </mat-icon>
+      </button>
+    </ng-container>
+    <button routerLink="/sing-in" *ngIf="!(canView$|async);else logout" mat-icon-button>
+      <mat-icon>key</mat-icon>
+    </button>
+    <ng-template #logout>
+      <button (click)="onLogout()" mat-icon-button>
+        <mat-icon>meeting_room</mat-icon>
+      </button>
+    </ng-template>
+  </div>
+</mat-toolbar>

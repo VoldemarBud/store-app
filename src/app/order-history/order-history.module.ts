@@ -3,6 +3,7 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {OrderHistoryComponent} from "./shared/order-history.component";
 import {MatExpansionModule} from "@angular/material/expansion";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
         CommonModule,
         OrderHistoryRoutingModule,
         MatExpansionModule,
+        MatPaginatorModule,
     ],
     exports: [OrderHistoryComponent]
 })
